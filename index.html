@@ -8,6 +8,7 @@
     </head>
     <body>
         <div class="login-container">
+            <img src="/static/img/2.webpg" alt="logo">
             <h1>Login</h1>
             <p>Please enter your credentials to login.</p>
             <form action="/login" method="post">
@@ -22,12 +23,14 @@
                 <div class="input-field">
                     <input type="checkbox" id="remember" name="remember">
                     <label for="remember">Remember me</label>
+                    <a href="/reset">Forgot password?</a>
                 </div>
-                <div class="input-field">
-                    <a href="register.html">Forgot password?</a>
+
+                <button type="submit" href='/login'>Login</button>
+                <div class="register-link">
+                    <p>Don't have an account?<a href="/register">Register</a></p>
                 </div>
-                
-                <button type="submit" href='da'>Login</button>
+
             </form>
         </div>
     </body>

@@ -64,3 +64,11 @@ body{
     display: block;
     margin-top: 10px;
 }
+
+.register-container a:hover{
+    text-decoration: underline;
+}
+
+.register-container button:hover{
+    background-color: #5cb161;
+}
