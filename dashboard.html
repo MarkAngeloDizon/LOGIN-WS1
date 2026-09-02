@@ -9,7 +9,8 @@
 <body>
     <div class="side-container">
         <nav class="sidebar">
-            <h1>Dashboard</h1>
+            <img src="/static/img/2.webpg" alt="logo" class="logo">
+            <p>Serenity National High School LMS</p>
             <ul>
                 <li><a href="#Dashboard">Dashboard</a></li>
                 <li><a href="#Courses">Courses</a></li>
@@ -19,9 +20,23 @@
         </nav>
     </div>
 
-    <div class="class content">
-        <div class="main">
+    <div class="main-content">
+        <div class="dashboard-container">
+            <h2>Dashboard</h2>
+            <p>This is your dashboard content.</p>
+        </div>
 
+        <div class="course-container">
+            <h2>Courses</h2>
+            <label for="search-course">Search Courses:</label>
+            <input type="text" id="search-course" name="search-course" placeholder="Search for courses...">
+            <button type="button">Search</button>
+        </div>
+        <div class="grades-container">
+            <h2>My Grades</h2>
+            <label for="search-grades">Search Grades:</label>
+            <input type="text" id="search-grades" name="search-grades" placeholder="Search for grades...">
+            <button type="button">Search</button>
         </div>
     </div>
 </body>

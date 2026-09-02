@@ -3,11 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/reset.css">
     <title>Reset Password</title>
 </head>
 <body>
-    <header>
-        <h1>Reset Password</h1>
-    </header>
+    <div class="reset-container">
+        <form action="/reset">
+            <h2>Reset Password</h2>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="old_password">Old Password:</label>
+            <input type="password" id="old_password" name="old_password" required>
+            <label for="new_password">New Password:</label>
+            <input type="password" id="new_password" name="new_password" required>
+            <button type="submit">Set new Password</button>
+            <button type="button"><a href="/logout">Back to Login</a></button>
+        </form>
+    </div>
 </body>
 </html>

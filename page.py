@@ -62,7 +62,7 @@ def create_app():
             if user:
                 return redirect(url_for('dashboard'))
             
-            return "Invalid email or password. Please try again."
+            return redirect(url_for('index'))
         
         return render_template('index')
 

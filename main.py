@@ -4,10 +4,11 @@ import mysql.connector
 def create_app():
     app = Flask(__name__, template_folder='.')
     db_connection = mysql.connector.connect(
-        host="localhost",        # Or your server IP
-        user="root",    # Your MySQL username
+        host="127.0.0.1",        # Or your server IP
+        user="root",    
         password="",# Your MySQL password
-        database="user_account" # The database name
+        database="user_account", # The database name
+        port=3306
     )
 
     # 2. Create a cursor object to execute commands
