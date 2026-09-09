@@ -1,0 +1,302 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background-image: url('/static/img/bg.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    min-height: 100vh;
+    color: #333;
+}
+
+.sidebar {
+    width: 230px;
+    background-color: #f2c75c;
+    color: #fff;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    margin-top: 20px;
+}
+
+.sidebar li {
+    font-size: 14px;
+    margin-bottom: 10px;
+    background-color: #e48a24;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+.sidebar a {
+    color: #000000;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.sidebar li:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+.sidebar p {
+    font-size: 14px;
+    font-family: 'Times New Roman', Times, serif;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10%;
+}
+
+.sidebar span {
+    color: #000000;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 12px;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 10px;
+    height: 100vh;
+    width: 100%;
+    overflow-y: auto;
+}
+
+#Home,
+#User-Management,
+#Course-Management,
+#Class-Management,
+#Schedule-Management,
+#Announcement,
+#Reports,
+#Accounts,
+#System-Settings {
+    background-color: rgba(246, 231, 193, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 183, 0, 0.35);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+.dashboard-title h1 {
+    color: #e48a24;
+    font-family: cursive;
+}
+
+.dashboard-title h2 {
+    color: #f2c75c;
+    font-family:'Times New Roman', Times, serif;
+}
+
+.overview {
+    background-color: rgba(246, 231, 193, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 183, 0, 0.35);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow-y: auto;
+    
+}
+
+.overview-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.users-overview,
+.courses-overview,
+.accounts-overview {
+    background-color: rgba(246, 231, 193, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(242, 199, 92, 0.35);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+    padding: 10px;
+    margin: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px; 
+}
+
+.overview-container h2 {
+    color: #f2c75c;
+}
+#User-Management h1 {
+    color: #e48a24;
+}
+
+#User-Management label {
+    color: #f2c75c;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+#User-Management input[type='text'] {
+    background: transparent;
+    padding: 5px;
+    width: 50vh;
+    border-color: #e48a24;
+    border-radius: 10px;
+    font-family: 'Times New Roman', Times, serif;
+    color: #f2c75c;
+}
+
+#User-Management button {
+    color: #0e0d0d;
+    background-color:#e48a24;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+}
+
+#User-Management button:hover{
+    color: #f2c75c;
+}
+
+.userinfo-title {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    color: #f2c75c;
+    margin-top: 10px;
+        overflow-y: auto;
+}
+
+.user-info {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    overflow-y: auto;  
+}
+
+.user-info h3{
+    color: #000000;
+    background-color: rgba(246, 231, 193, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(242, 199, 92, 0.35);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;  
+}
+
+#Course-Management h1 {
+    color: #e48a24;
+}
+.course-container {
+    background-color: rgba(246, 231, 193, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(242, 199, 92, 0.35);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    overflow-y: auto;
+}
+
+.course-container h3 {
+    color: #e48a24;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    background-color: rgba(246, 231, 193, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(242, 199, 92, 0.35);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    width: 500px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    overflow-y: auto;
+}
+
+.form-group label {
+    color: #f2c75c;
+    font-family: 'Times New Roman', Times, serif;
+    overflow-y: auto;
+}
+
+.form-group input[type='text']{
+    background: transparent;
+    padding: 5px;
+    width: 50vh;
+    border-color: #e48a24;
+    border-radius: 10px;
+    font-family: 'Times New Roman', Times, serif;
+    color: #f2c75c;   
+}
+
+.course-container button {
+    color: #0e0d0d;
+    background-color:#e48a24;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;   
+}
+
+.course-container button:hover{
+    background-color: #f2c75c;
+    color: #e48a24;
+}
+
+.show-course {
+    margin: 10px;
+}
+
+.courseinfo-title {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    color: #e48a24;
+    padding: 10px;
+}
+
+.course-info { 
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    color: #f2c75c;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.course-info h3 {
+    color: #000000;
+    background-color: rgba(246, 231, 193, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(242, 199, 92, 0.35);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}

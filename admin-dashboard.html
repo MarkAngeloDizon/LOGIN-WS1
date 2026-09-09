@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/admin-dashboard.css">
+    <title>Admin-LMS</title>
+</head>
+<body>
+    <div class="sidebar">
+        <section class="logo">
+            <img src="/static/img/Untitled design.svg" alt="logo">
+            <span>Welcome, {{ role }} {{ lastname }}</span>
+            <p>Serenity National High School</p>
+        </section>
+        <nav class="nav">
+            <ul>
+                <li><a href="#Home"><i class="fa-solid fa-home"></i> Home</a></li>
+                <li><a href="#User-Management"><i class="fa-solid fa-users"></i> User Management</a></li>
+                <li><a href="#Course-Management"><i class="fa-solid fa-book"></i> Course Management</a></li>
+                <li><a href="#Class-Management"><i class="fa-solid fa-chalkboard-user"></i> Class Management</a></li>
+                <li><a href="#Schedule-Management"><i class="fa-solid fa-calendar-days"></i> Schedule Management</a></li>
+                <li><a href="#Announcement"><i class="fa-solid fa-bullhorn"></i> Announcement</a></li>
+                <li><a href="#Reports"><i class="fa-solid fa-chart-line"></i> Reports</a></li>
+                <li><a href="#Accounts"><i class="fa-solid fa-user-gear"></i> Accounts</a></li>
+                <li><a href="#System-Settings"><i class="fa-solid fa-gear"></i> System Settings</a></li>
+                <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content">
+        <section id="Home" class="dashboard">
+            <div class="dashboard-title">
+            <h1>Dashboard</h1>
+            <h2>Welcome, {{ role }} {{ firstname }} {{ lastname }}!</h2>                
+            </div>
+            <div class="overview">
+                <section class="overview-container">
+                    <section class="users-overview">
+                        <h2>Users</h2>
+                        <h3>{{ users|length }}</h3>
+                    </section>
+                    <section class="courses-overview">
+                        <h2>Courses:</h2>
+                    </section>
+                    <section class="accounts-overview">
+                        <h2>Accounts:</h2>
+                        <h3>{{ users|length }}</h3>
+                    </section>
+                </section>
+            </div>
+        </section>
+        <section id="User-Management" class="user-management">
+            <h1>User Management</h1>
+            <label for="search-user">Search User:</label>
+            <input type="text" id="search-user" name="search-user" placeholder="search for user...">
+            <button type="button">Search</button>
+            <section class="user-edit">
+                <section class="userinfo-title">
+                    <p>ID</p>
+                    <p>LastName</p>
+                    <p>FirstName</p>
+                    <p>MiddleName</p>
+                    <p>Role</p>
+                </section>
+                <section class="user-info">
+                    <section class="user-id">
+                        {% for user in users %}
+                            <h3>{{ user.id }}</h3>
+                        {% else %}
+                            <h3>No id found</h3>
+                        {% endfor %}
+                    </section>
+                    <section class="user-ln">
+                        {% for user in users %}
+                            <h3>{{ user.firstname }}</h3>
+                        {% else %}
+                            <h3>No firstname found</h3>
+                        {% endfor %}
+                    </section>
+                    <section class="user-fn">
+                        {% for user in users %}
+                            <h3>{{ user.lastname }}</h3>
+                        {% else %}
+                            <h3>No lastname found</h3>
+                        {% endfor %}
+                    </section>
+                    <section class="user-mn">
+                        {% for user in users %}
+                            <h3>{{ user.middlename }}</h3>
+                        {% else %}
+                            <h3>No middlename found</h3>
+                        {% endfor %}
+                    </section>
+                    <section class="user-role">
+                        {% for user in users %}
+                            <h3>{{ user.role }}</h3>
+                        {% else %}
+                            <h3>No role found</h3>
+                        {% endfor %}
+                    </section>
+                </section>
+            </section>
+        </section>
+        <section id="Course-Management" class="course-management">
+            <h1>Course Management</h1>
+            <form action="/addcourse" class="course-container" method="POST">
+                <h3>Add Course</h3>
+                <div class="form-group">
+                    <label for="course_code">Course Code:</label>
+                    <input type="text" name="course_code" id="course_code" required>
+                </div>
+                <div class="form-group">
+                    <label for="course_name">Course Name:</label>
+                    <input type="text" name="course_name" id="course_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="course_description">Course Description:</label>
+                    <input type="text" name="course_description" id="course_description">
+                </div>
+
+                <button type="submit">Add Course</button>
+            </form>
+            <div class="show-course">
+                <section class="courseinfo-title">
+                    <p>Course ID</p>
+                    <p>Course Code</p>
+                    <p>Course Name</p>
+                    <p>Course Description</p>
+                </section>
+                <section class="course-info">
+                    <section class="course-id">
+                        {% for user in course_list %}
+                            <h3>{{ user.course_id }}</h3>
+                        {% else %}
+                            <h3>No id found</h3>
+                        {% endfor %}
+                    </section>
+                    <section class="course-code">
+                        {% for user in course_list %}
+                            <h3>{{ user.course_code }}</h3>
+                        {% else %}
+                            <h3>No course name found</h3>
+                        {% endfor %}
+                    </section>
+                    <section class="course-name">
+                        {% for user in course_list %}
+                            <h3>{{ user.course_name }}</h3>
+                        {% else %}
+                            <h3>No lastname found</h3>
+                        {% endfor %}
+                    </section>
+                    <section class="course-desc">
+                        {% for user in course_list %}
+                            <h3>{{ user.course_description }}</h3>
+                        {% else %}
+                            <h3>No middlename found</h3>
+                        {% endfor %}
+                    </section>
+                </section>
+            </div>
+        </section>
+        <section id="Class-Management" class="class-management">
+        </section>
+        <section id="Schedule-Management" class="schedule-management"></section>
+        <section id="Announcement" class="announcement"></section>
+        <section id="Reports" class="reports"></section>
+        <section id="Accounts" class="accounts"></section>
+        <section id="System-Settings" class="system-settings"></section>
+    </div>
+</body>
+</html>

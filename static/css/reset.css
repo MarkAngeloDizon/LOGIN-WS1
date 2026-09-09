@@ -1,0 +1,81 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url(/static/img/bg.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #333;
+}
+
+.reset-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: rgba(246, 231, 193, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(242, 199, 92, 0.35);
+    border-radius: 10px;
+}
+
+.reset-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #F2C75C;
+}
+
+.reset-container p {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: black
+}
+.reset-container label {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.reset-container input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.reset-container button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #D4A52C, #B77A18);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.reset-container button:hover {
+    background: linear-gradient(135deg, #F2C75C, #D4A52C);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(183, 122, 24, 0.35);
+}
+
+.reset-container button a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.reset-container button a:hover {
+    color: #FFE39A;
+}
