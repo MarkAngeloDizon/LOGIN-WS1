@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="static/css/student-dashboard.css">
+    <title>Student-Dashboard</title>
+</head>
+<body>
+    <div class="side-container">
+        <nav class="sidebar">
+            <img src="/static/img/Untitled design.svg" alt="logo" class="logo">
+            <p>Serenity National High School LMS</p>
+            <ul>
+                <li><a href="#Home"><i class="fa-solid fa-home"></i>  Home</a></li>
+                <li><a href="#Courses"><i class="fa-solid fa-layer-group"></i>  Courses</a></li>
+                <li><a href="#Grades"><i class="fa-solid fa-chart-bar"></i> Grades</a></li>
+                <li><a href="#Profile"><i class="fa-solid fa-gear"></i>  Setting</a></li>
+                <li><a href="/logout"><i class="fa-solid fa-sign-out-alt"></i>  Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div href="#Home" class="dashboard-container">
+            <h2>Dashboard</h2>
+                <h3>Welcome, {{ firstname }} {{ middlename }} {{ lastname }}!</h3>
+                <p>Here's a quick overview of your account.</p>
+            <div class="dashboard-card">
+                <section class="courses-card">
+                    <h4>Enrolled Courses</h4>
+                    <p>Description of Course 1.</p>
+                </section>
+                <section class="pending-ass-card">
+                    <h4>Pending Assignments</h4>
+                    <p>Description of Course 2.</p>
+                </section>
+                <section class="current-card">
+                    <h4>Current Courses</h4>
+                    <p>Description of Course 3.</p>
+                </section>
+                <section class="todays-card">
+                    <h4>Today's Classes</h4>
+                    <p>Description of Course 4.</p>
+                </section>
+            </div>
+        </div>
+
+        <div href="#Courses" class="course-container">
+            <h2>Courses</h2>
+            <label for="search-course">Search Courses:</label>
+            <input type="text" id="search-course" name="search-course" placeholder="Search for courses...">
+            <button type="button">Search</button>
+        </div>
+        <div href="#Grades" class="grades-container">
+            <h2>My Grades</h2>
+            <label for="search-grades">Search Grades:</label>
+            <input type="text" id="search-grades" name="search-grades" placeholder="Search for grades...">
+            <button type="button">Search</button>
+        </div>
+    </div>
+</body>
+</html>
