@@ -85,14 +85,8 @@ body{
 }
 
 #Home,
-#User-Management,
-#Course-Management,
-#Class-Management,
-#Schedule-Management,
-#Announcement,
-#Reports,
-#Accounts,
-#System-Settings {
+#Student-Management,
+#Teacher-Management {
     background-color: rgba(246, 231, 193, 0.12);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -148,17 +142,20 @@ body{
 .overview-container h2 {
     color: #f2c75c;
 }
-#User-Management h1 {
+#Student-Management h1,
+#Teacher-Management h1 {
     color: #e48a24;
 }
 
-#User-Management label {
+#Student-Management label,
+#Teacher-Management label {
     color: #f2c75c;
     font-family: 'Times New Roman', Times, serif;
 }
 
 
-#User-Management input[type='text'] {
+#Student-Management input[type='text'],
+#Teacher-Management input[type='text'] {
     background: transparent;
     padding: 5px;
     width: 50vh;
@@ -168,7 +165,8 @@ body{
     color: #f2c75c;
 }
 
-#User-Management button {
+#Student-Management button,
+#Teacher-Management button {
     color: #0e0d0d;
     background-color:#e48a24;
     padding: 8px;
@@ -176,11 +174,13 @@ body{
     border: none;
 }
 
-#User-Management button:hover{
+#Student-Management button:hover,
+#Teacher-Management button:hover{
     color: #f2c75c;
 }
 
-.userinfo-title {
+.userinfo-title,
+.teacherinfo-title {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     color: #f2c75c;
@@ -188,14 +188,16 @@ body{
         overflow-y: auto;
 }
 
-.user-info {
+.user-info,
+.teacher-info {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     overflow-y: auto;  
 }
 
-.user-info h3{
+.user-info h3,
+.teacher-info h3 {
     color: #000000;
     background-color: rgba(246, 231, 193, 0.12);
     backdrop-filter: blur(10px);
@@ -208,25 +210,35 @@ body{
     border-radius: 5px;  
 }
 
-#Course-Management h1 {
-    color: #e48a24;
-}
-.course-container {
+.add-user,
+.add-teacher {
     background-color: rgba(246, 231, 193, 0.12);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(242, 199, 92, 0.35);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 40%;
     padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.add-user input[type="text"],
+.add-user input[type="email"],
+.add-user input[type="password"],
+.add-teacher input[type='text'],
+.add-teacher input[type='email'], 
+.add-teacher input[type='password'] {
+    margin: 10px;
+    display: flex;
+    background: transparent;
+    padding: 5px;
+    width: 50vh;
+    border-color: #e48a24;
     border-radius: 10px;
-    overflow-y: auto;
+    font-family: 'Times New Roman', Times, serif;
+    color: #f2c75c;   
 }
-
-.course-container h3 {
-    color: #e48a24;
-    margin-bottom: 10px;
-}
-
 .form-group {
     background-color: rgba(246, 231, 193, 0.12);
     backdrop-filter: blur(10px);
@@ -246,7 +258,7 @@ body{
     overflow-y: auto;
 }
 
-.form-group input[type='text']{
+.finduser input[type='text']{
     background: transparent;
     padding: 5px;
     width: 50vh;

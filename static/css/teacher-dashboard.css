@@ -9,12 +9,18 @@ body{
     background-image: url('/static/img/bg.webp');
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     display: flex;
+    min-height: 100vh;
     color: #333;
 }
 
+.logo img {
+    width: 50px;
+    height: 50px;
+}
 .sidebar {
-    width: 200px;
+    width: 230px;
     background-color: #f2c75c;
     color: #fff;
     padding: 20px;
@@ -37,10 +43,13 @@ body{
 
 .sidebar li {
     font-size: 14px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     background-color: #e48a24;
+    padding: 10px;
     border-radius: 5px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
 }
 
 
@@ -48,7 +57,6 @@ body{
     color: #000000;
     text-decoration: none;
     display: block;
-    padding: 10px;
 }
 
 .sidebar li:hover {
@@ -56,7 +64,8 @@ body{
     transition: transform 0.3s ease;
 }
 .sidebar p {
-    font-size: 10px;
+    font-size: 14px;
+    font-family: 'Times New Roman', Times, serif;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -65,13 +74,37 @@ body{
     width: 50px;
     height: 50px;
     border-radius: 10%;
-    margin-bottom: 5px;
-    margin-left: 50px;
+}
 
+.sidebar span {
+    color: #000000;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 12px;
 }
 
 .main-content {
-    margin-left: 200px;
+    margin-left: 250px;
     padding: 10px;
     min-height: 100vh;
+}
+
+#dashboard-container {
+    background-color: rgba(246, 231, 193, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 183, 0, 0.35);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+#dashboard-container h1 {
+    color: #e48a24;
+}
+
+#dashboard-container h2 {
+    color: #f2c75c;
 }

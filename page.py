@@ -72,16 +72,18 @@ def create_app():
                 session['lastname'] = user['lastname']
                 session['role'] = user['role']
 
-            if user['role'] == 'student':
-                return redirect(url_for('student_dashboard'))
+                if user['role'] == 'student':
+                    return redirect(url_for('student_dashboard'))
 
-            elif user['role'] == 'teacher':
-                return redirect(url_for('teacher_dashboard'))
+                elif user['role'] == 'teacher':
+                    return redirect(url_for('teacher_dashboard'))
+                
+                elif user['role'] == 'Admin':
+                    return redirect(url_for('admin_dashboard'))
+                
+                return redirect(url_for('index'))
             
-            elif user['role'] == 'Admin':
-                return redirect(url_for('admin_dashboard'))
-            
-            return redirect(url_for('index'))
+            return "Invalid email or password."
         
         return render_template('index.html')
 
@@ -137,9 +139,6 @@ def create_app():
         cursor.execute("SELECT id, firstname, middlename, lastname, email, role FROM users")
         user_list = cursor.fetchall()
 
-        cursor.execute("SELECT course_id, course_code, course_name, course_description FROM courses")
-        course_list =cursor.fetchall()
-
         cursor.close()
         conn.close()
 
@@ -150,32 +149,62 @@ def create_app():
             middlename = session.get('middlename'),
             lastname = session.get('lastname'),
             role = session.get('role'),
-            user_id = session.get('id'),
+            user_id = session.get('user_id'),
             users=user_list,
             account_count=account_count,
-            course_list=course_list
         )
 
-    @app.route('/addcourse', methods=['POST'])
-    def add_course():
-        code = request.form.get('course_code')
-        name = request.form.get('course_name')
-        desc = request.form.get('course_description')
+    @app.route('/adduser', methods=['POST'])
+    def add_user():
+        if request.method == 'POST':
+            firstname = request.form.get('firstname')
+            lastname = request.form.get('lastname')
+            middlename = request.form.get('middlename')
+            email = request.form.get('email')
+            password = request.form.get('password')
 
-        if code and name:
-            conn = get_db_connection()
-            cursor = conn.cursor()
+            if firstname and lastname and middlename and email and password:
+                db_connection = get_db_connection()
+                cursor = db_connection.cursor()
 
-            query = "INSERT INTO courses (course_code, course_name, course_description) VALUES (%s, %s, %s)"
-            values = (code, name, desc)
+                query = """INSERT INTO users (firstname, lastname, middlename, email, password, role) VALUES (%s, %s, %s, %s, %s, %s)"""
+                cursor.execute(query, (firstname, lastname, middlename, email, password, 'student'))
 
-            cursor.execute(query, values)
-            conn.commit()
+                db_connection.commit()
+                cursor.close()
+                db_connection.close()
 
-            cursor.close()
-            conn.close()
+                return redirect(url_for('admin_dashboard'))
 
-        return redirect(url_for('admin_dashboard'))
+            return "Please fill in all required fields."
+        
+        return render_template('admin-dashboard.html')
+
+    @app.route('/addteacher', methods=['POST'])
+    def add_teacher():
+        if request.method == 'POST':
+            firstname = request.form.get('firstname')
+            lastname = request.form.get('lastname')
+            middlename = request.form.get('middlename')
+            email = request.form.get('email')
+            password = request.form.get('password')
+
+            if firstname and lastname and middlename and email and password:
+                db_connection = get_db_connection()
+                cursor = db_connection.cursor()
+
+                query = """INSERT INTO users (firstname, lastname, middlename, email, password, role) VALUES (%s, %s, %s, %s, %s, %s)"""
+                cursor.execute(query, (firstname, lastname, middlename, email, password, 'teacher'))
+
+                db_connection.commit()
+                cursor.close()
+                db_connection.close()
+
+                return redirect(url_for('admin_dashboard'))
+
+            return "Please fill in all required fields."
+        
+        return render_template('admin-dashboard.html')
 
     @app.route('/reset', methods=['GET', 'POST'])
     @app.route('/reset.html', methods=['GET', 'POST'])

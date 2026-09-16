@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="/static/css/teacher-dashboard.css">
     <title>Teacher RMS</title>
 </head>
@@ -14,25 +15,15 @@
         </section>
         <section class="navbar">
             <ul class="nav">
-                <li><a href="#"></a>Dashboard</li>
-                <li><a href="#"></a>My Students</li>
-                <li><a href="#"></a>My Classes</li>
-                <li><a href="#"></a>My Subjects</li>
-                <li><a href="#"></a>Assignments</li>
-                <li><a href="#"></a>Grades & Records</li>
-                <li><a href="#"></a>Attendance</li>
-                <li><a href="#"></a>Announcements</li>
-                <li><a href="#"></a>My Schedule</li>
-                <li><a href="#"></a>Reports</li>
-                <li><a href="#"></a>Profile & Settings</li>
-                <li><a href="#"></a>Logout</li>
+                <li><a href="#dashboard-container"><i class="fa-solid fa-home"></i></a> Dashboard</li>
+                <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a> Logout</li>
             </ul>
         </section>
     </div>
     <div class="main-content">
-        <div class="dashboard-container">
+        <div id="dashboard-container">
             <h1>Dashboard</h1>
-            <h2>Welcome, {{ role }} {{ firstname }} {{ middlename }} {{ lastname }} </h2>
+            <h2>Welcome, {{ role }} {{ firstname }} {{ lastname }} </h2>
         </div>
     </div>
 </body>
