@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -6,12 +6,14 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-image: url(/static/img/bg.webp);
+    background-image: url('/static/img/bg.webp');
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     color: #333;
+    min-height: 100vh;
 }
-
 .reset-container {
     max-width: 400px;
     margin: 100px auto;
@@ -34,8 +36,9 @@ body {
     text-align: center;
     margin-bottom: 10px;
     margin-top: 10px;
-    color: black
+    color: black;
 }
+
 .reset-container label {
     font-family: Arial, sans-serif;
     font-size: 14px;
@@ -78,4 +81,94 @@ body {
 
 .reset-container button a:hover {
     color: #FFE39A;
+}
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 20px;
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .reset-container {
+        width: 100%;
+        max-width: 400px;
+        margin: 60px auto;
+        padding: 25px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 15px;
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .reset-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .reset-container h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .reset-container p {
+        font-size: 13px;
+    }
+
+    .reset-container label {
+        font-size: 13px;
+    }
+
+    .reset-container input[type="email"] {
+        padding: 9px;
+    }
+
+    .reset-container button {
+        padding: 10px;
+    }
+}
+
+
+@media (max-width: 360px) {
+
+    body {
+        padding: 10px;
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .reset-container {
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .reset-container h2 {
+        font-size: 20px;
+    }
+
+    .reset-container p {
+        font-size: 12px;
+    }
+
+    .reset-container input[type="email"] {
+        padding: 8px;
+    }
+
+    .reset-container button {
+        padding: 9px;
+        font-size: 13px;
+    }
 }

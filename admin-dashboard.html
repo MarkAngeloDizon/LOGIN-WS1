@@ -66,7 +66,27 @@
                     <button type="submit">Create User</button>
                 </form>
             </section>
-            <section class="user-edit">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>MiddleName</th>
+                        <th>Role</th>
+                    </tr>
+                    <tr>
+                        {% for user in users %}
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.firstname }}</td>
+                            <td>{{ user.lastname }}</td>
+                            <td>{{ user.middlename }}</td>
+                            <td>{{ user.role }}</td>
+                        {% else %}
+                            <td colspan="5">No users found</td>
+                        {% endfor %}
+                    </tr>
+                </table>
+            <!-- <table class="user-edit">
                 <section class="userinfo-title">
                     <p>ID</p>
                     <p>Firstname</p>
@@ -111,7 +131,7 @@
                         {% endfor %}
                     </section>
                 </section>
-            </section>
+            </table> -->
         </section>
         <section id="Teacher-Management" class="Teacher-management">
             <h1>Teacher Management</h1>

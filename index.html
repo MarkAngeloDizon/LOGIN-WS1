@@ -6,15 +6,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="static/css/index.css" rel="stylesheet">
     </head>
-    <body>
+<body>
+    <div class="login-wrapper">
         <div class="login-container">
             <section class="logo">
                 <img src="/static/img/Untitled design.svg" alt="logo">
                 <p>Serenity National High School LMS</p>
             </section>
-            
-
-            
             <p>Please enter your credentials to login.</p>
             <form action="/login" method="post">
                 <div class="input-field">
@@ -30,13 +28,32 @@
                     <label for="remember">Remember me</label>
                     <a href="/reset">Forgot password?</a>
                 </div>
-
-                <button type="submit" href='/login'>Login</button>
+                <button type="submit">Login</button>
                 <div class="register-link">
-                    <p>Don't have an account?<a href="/register">Register</a></p>
+                    <p>
+                        Don't have an account?
+                        <a href="/register">Register</a>
+                    </p>
                 </div>
-
             </form>
         </div>
-    </body>
+        <div class="credentials">
+            <h2>Account Credentials</h2>
+            <section class="credpass">
+                <h2>Email</h2>
+                <h2>Password</h2>
+                <h2>Role</h2>
+                <h3>Admin@gmail.com</h3>
+                <h3>12345678</h3>
+                <h3>Admin</h3>
+                <h3>Fbenosa@gmail.com</h3>
+                <h3>12345678</h3>
+                <h3>Teacher</h3>
+                <h3>brianacebelarmino@gmail.com</h3>
+                <h3>12345678</h3>
+                <h3>Student</h3>
+            </section>
+        </div>
+    </div>
+</body>
 </html>

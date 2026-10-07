@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body{
@@ -27,27 +28,27 @@ body{
     box-sizing: border-box;
 }
 
-.register-container h1{
+.register-container h1 {
     text-align: center;
     margin-bottom: 20px;
     color: #F2C75C;
     font-weight: bold;
 }
 
-.register-container p{
+.register-container p {
     font-size: 14px;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.register-container form{
+.register-container form {
     display: flex;
     flex-direction: column;
 }
 
 .register-container input[type="text"],
 .register-container input[type="email"],
-.register-container input[type="password"]{
+.register-container input[type="password"] {
     padding: 10px;
     margin-bottom: 10px;
     width: 90%;
@@ -55,7 +56,7 @@ body{
     border-radius: 3px;
 }
 
-.register-container button{
+.register-container button {
     padding: 10px;
     margin-top: 10px;
     width: 50%;
@@ -67,17 +68,109 @@ body{
     cursor: pointer;
 }
 
-.register-container a{
+.register-container a {
     text-decoration: none;
     color: #F2C75C;
     display: block;
     margin-top: 10px;
 }
 
-.register-container a:hover{
+.register-container a:hover {
     text-decoration: underline;
 }
 
-.register-container button:hover{
+.register-container button:hover {
     background-color: #8d5000;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+    }
+
+    .register-container {
+        width: 100%;
+        max-width: 340px;
+        padding: 25px;
+    }
+
+    .register-container input[type="text"],
+    .register-container input[type="email"],
+    .register-container input[type="password"] {
+        width: 100%;
+    }
+
+    .register-container button {
+        width: 60%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+        align-items: center;
+    }
+
+    .register-container {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .register-container h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .register-container p {
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+
+    .register-container input[type="text"],
+    .register-container input[type="email"],
+    .register-container input[type="password"] {
+        width: 100%;
+        padding: 9px;
+    }
+
+    .register-container button {
+        width: 70%;
+        padding: 9px;
+    }
+
+    .register-container a {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 360px) {
+    body {
+        padding: 10px;
+    }
+
+    .register-container {
+        padding: 15px;
+    }
+
+    .register-container h1 {
+        font-size: 21px;
+    }
+
+    .register-container p {
+        font-size: 12px;
+    }
+
+    .register-container input[type="text"],
+    .register-container input[type="email"],
+    .register-container input[type="password"] {
+        padding: 8px;
+    }
+
+    .register-container button {
+        width: 80%;
+        padding: 8px;
+        font-size: 13px;
+    }
 }

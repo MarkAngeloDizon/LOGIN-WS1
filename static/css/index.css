@@ -1,243 +1,428 @@
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-body{
+body {
     font-family: Arial, sans-serif;
     background-color: #1B0F08;
     background-image: url('/static/img/bg.webp');
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;
+
+    min-height: 100vh;
+    padding: 30px 20px;
 }
 
-img {
-    justify-content: center;
+
+.login-wrapper {
+    width: 100%;
+    max-width: 520px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 0 auto;
+}
+
+
+
+.logo img {
+    display: block;
     width: 100px;
     height: 100px;
-    margin-left: 33%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.register-link{
+.logo p {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+
+.login-container {
     font-family: Arial, sans-serif;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-}
 
-.register-link p{           
-    text-decoration: none;
-    font-size: 14px;
-    text-align: center;
-}
-
-.login-container{
-    font-family: Arial, sans-serif;
     background-color: rgba(246, 231, 193, 0.12);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+
     border: 1px solid rgba(242, 199, 92, 0.35);
+
     padding: 20px;
     border-radius: 20px;
+
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+
     width: 300px;
 }
 
-.login-container h1{
+.login-container h1 {
     font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.login-container p{
-    font-family:Arial, Helvetica, sans-serif;
+.login-container > p {
+    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.login-container form{
+
+
+.login-container form {
     display: flex;
     flex-direction: column;
 }
 
+.input-field {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+
+
 .login-container input[type="email"],
-.login-container input[type="password"]{
+.login-container input[type="password"] {
     padding: 10px;
     margin-bottom: 10px;
+
     width: 90%;
+
     background-color: rgba(255, 255, 255, 0.2);
+
     backdrop-filter: blur(10px);
+
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.login-container input[type="checkbox"]{
+.login-container input[type="checkbox"] {
     margin-right: 5px;
+
     position: relative;
     top: 2px;
 }
 
-.login-container label{
+.login-container label {
     font-size: 14px;
     margin-bottom: 10px;
 }
-.login-container button{
+
+
+.login-container button {
     padding: 10px;
     margin-top: 10px;
+
     width: 50%;
     align-self: center;
+
     background-color: #B77A18;
     color: #fff;
+
     border: none;
     border-radius: 3px;
+
     cursor: pointer;
 }
 
-.login-container button a{
+.login-container button:hover {
+    background-color: #F2C75C;
+    color: #1B0F08;
+}
+
+
+
+.login-container a {
     text-decoration: none;
-    color: #fff;
+    color: #F2C75C;
+
     font-size: 14px;
     text-align: center;
 }
 
-.login-container button:hover{
-    color: #F2C75C;
-}
-
-.login-container a{
-    text-decoration: none;
-    color: #F2C75C;
-    font-size: 14px;
-    text-align: center;
-}
-
-.login-container a:hover{
+.login-container a:hover {
     text-decoration: underline;
 }
 
-.logo p{
-    font-family: 'Times New Roman', Times, serif;
+
+.register-link {
+    font-family: Arial, sans-serif;
+
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
 }
 
-@media (max-width: 768px) { 
-    body { padding: 20px; 
-        box-sizing: border-box; 
-    } 
-    
-    .login-container { 
-        width: 90%; 
-        max-width: 350px; 
-        padding: 20px; 
-        box-sizing: border-box; 
-    } 
-    
-    img { 
-        width: 90px; 
-        height: 90px; 
-        margin-left: auto; 
-        margin-right: auto; 
-        display: block; 
-    } 
-    
-    .login-container input[type="email"], 
-    .login-container input[type="password"] { 
-        width: 100%; 
-        box-sizing: border-box; 
-    } 
-    .login-container button { 
-        width: 60%; 
+.register-link p {
+    text-decoration: none;
+
+    font-size: 14px;
+    text-align: center;
+}
+
+
+.credentials {
+    width: 500px;
+
+    margin-top: 15px;
+    padding: 20px;
+
+    font-family: Arial, sans-serif;
+
+    background-color: rgba(246, 231, 193, 0.12);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(242, 199, 92, 0.35);
+
+    border-radius: 20px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.credentials > h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.credpass {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 8px;
+
+    text-align: center;
+}
+
+.credpass h2 {
+    margin: 5px;
+
+    font-size: 16px;
+}
+
+.credpass h3 {
+    font-size: 13px;
+
+    margin: 5px;
+
+    word-break: break-word;
+}
+
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 20px 15px;
+
+        align-items: flex-start;
+    }
+
+    .login-wrapper {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .login-container {
+        width: 90%;
+        max-width: 350px;
+
+        padding: 20px;
+    }
+
+    .logo img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .login-container input[type="email"],
+    .login-container input[type="password"] {
+        width: 100%;
+    }
+
+    .login-container button {
+        width: 60%;
+    }
+
+    .credentials {
+        width: 90%;
+        max-width: 500px;
+
+        margin-top: 15px;
+    }
+
+    .credpass {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (max-width: 480px) { 
-    body { 
-        padding: 15px; 
-        min-height: 100vh; 
-        box-sizing: border-box; 
-    } 
-    
-    .login-container { 
-        width: 100%; 
-        max-width: 330px; 
-        padding: 18px; 
-        border-radius: 15px; 
-        box-sizing: border-box; 
-    } 
-    
-    .login-container h1 { 
-        font-size: 24px; 
-        margin-bottom: 15px; 
-    } 
-    
-    .login-container p { 
-        font-size: 13px; 
-        margin-bottom: 15px; 
-    } 
-    
-    img { 
-        width: 75px; 
-        height: 75px; 
-        margin-left: auto; 
-        margin-right: auto; 
-        display: block; 
-    } 
-    
-    .login-container input[type="email"], 
-    .login-container input[type="password"] { 
-        width: 100%; 
-        padding: 10px; 
-        font-size: 14px; 
-        box-sizing: border-box; 
-    } 
-    .login-container label { 
-        font-size: 13px; 
-    } 
-    
-    .login-container button { 
-        width: 70%; 
-        padding: 10px; 
-    } 
-    
-    .login-container a { 
-        font-size: 13px; 
-    } 
-    .register-link { 
-        padding: 8px; 
-    } 
-    .register-link p { 
-        font-size: 13px; 
-    } 
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 15px 10px;
+
+        min-height: 100vh;
+    }
+
+    .login-wrapper {
+        width: 100%;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 330px;
+
+        padding: 18px;
+
+        border-radius: 15px;
+    }
+
+    .logo img {
+        width: 75px;
+        height: 75px;
+    }
+
+    .login-container h1 {
+        font-size: 24px;
+
+        margin-bottom: 15px;
+    }
+
+    .login-container > p {
+        font-size: 13px;
+
+        margin-bottom: 15px;
+    }
+
+    .login-container input[type="email"],
+    .login-container input[type="password"] {
+        width: 100%;
+
+        padding: 10px;
+
+        font-size: 14px;
+    }
+
+    .login-container label {
+        font-size: 13px;
+    }
+
+    .login-container button {
+        width: 70%;
+
+        padding: 10px;
+    }
+
+    .login-container a {
+        font-size: 13px;
+    }
+
+    .register-link {
+        padding: 8px;
+    }
+
+    .register-link p {
+        font-size: 13px;
+    }
+
+
+    /* Credentials */
+
+    .credentials {
+        width: 100%;
+        max-width: 330px;
+
+        padding: 15px;
+
+        margin-top: 12px;
+
+        border-radius: 15px;
+    }
+
+    .credentials > h2 {
+        font-size: 19px;
+    }
+
+    .credpass {
+        grid-template-columns: 1fr 1fr 1fr;
+
+        gap: 5px;
+    }
+
+    .credpass h2 {
+        font-size: 13px;
+    }
+
+    .credpass h3 {
+        font-size: 11px;
+
+        word-break: break-word;
+    }
 }
 
-@media (max-width: 360px) { 
-    body { 
-        padding: 10px; 
-    } 
-    
-    .login-container { 
-        max-width: 300px; 
-        padding: 15px; 
-    } 
-    
-    .login-container h1 { 
-        font-size: 21px; 
-    } 
-    .login-container p { 
-        font-size: 12px; 
-    } 
-    
-    img { 
-        width: 65px; 
-        height: 65px; 
-    } 
-    .login-container button { 
-        width: 80%; 
-    } 
-    .register-link p { 
-        font-size: 12px; 
-    } 
+
+@media (max-width: 360px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .login-container {
+        max-width: 300px;
+
+        padding: 15px;
+    }
+
+    .logo img {
+        width: 65px;
+        height: 65px;
+    }
+
+    .login-container h1 {
+        font-size: 21px;
+    }
+
+    .login-container > p {
+        font-size: 12px;
+    }
+
+    .login-container button {
+        width: 80%;
+    }
+
+    .register-link p {
+        font-size: 12px;
+    }
+
+
+    .credentials {
+        max-width: 300px;
+
+        padding: 12px;
+    }
+
+    .credentials > h2 {
+        font-size: 17px;
+    }
+
+    .credpass h2 {
+        font-size: 12px;
+    }
+
+    .credpass h3 {
+        font-size: 10px;
+    }
 }
