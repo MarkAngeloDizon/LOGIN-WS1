@@ -40,6 +40,10 @@
                         <h2>Accounts:</h2>
                         <h3>{{ users|length }}</h3>
                     </section>
+                    <section class="courses-overview">
+                        <h2>Courses:</h2>
+                        <h3>{{ courses|length }}</h3>
+                    </section>
                 </section>
             </div>
         </section>
@@ -66,72 +70,52 @@
                     <button type="submit">Create User</button>
                 </form>
             </section>
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>MiddleName</th>
-                        <th>Role</th>
-                    </tr>
-                    <tr>
-                        {% for user in users %}
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.firstname }}</td>
-                            <td>{{ user.lastname }}</td>
-                            <td>{{ user.middlename }}</td>
-                            <td>{{ user.role }}</td>
-                        {% else %}
-                            <td colspan="5">No users found</td>
-                        {% endfor %}
-                    </tr>
-                </table>
-            <!-- <table class="user-edit">
-                <section class="userinfo-title">
-                    <p>ID</p>
-                    <p>Firstname</p>
-                    <p>Lastname</p>
-                    <p>MiddleName</p>
-                    <p>Role</p>
-                </section>
-                <section class="user-info">
-                    <section class="user-id">
+            <table class="user-data">
+                <tr>
+                    <th>ID</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Middlename</th>
+                    <th>Role</th>
+                </tr>
+                <tr>
+                    <td class="user-id">
                         {% for user in users %}
                             <h3>{{ user.id }}</h3>
                         {% else %}
-                            <h3>No id found</h3>
+                            <h3>No id Found</h3>
                         {% endfor %}
-                    </section>
-                    <section class="user-ln">
+                    </td>
+                    <td>
                         {% for user in users %}
                             <h3>{{ user.firstname }}</h3>
                         {% else %}
-                            <h3>No firstname found</h3>
+                            <h3>No firstname Found</h3>
                         {% endfor %}
-                    </section>
-                    <section class="user-fn">
+                    </td>
+                    <td>
                         {% for user in users %}
                             <h3>{{ user.lastname }}</h3>
                         {% else %}
-                            <h3>No lastname found</h3>
+                            <h3>No lastname Found</h3>
                         {% endfor %}
-                    </section>
-                    <section class="user-mn">
+                    </td>
+                    <td>
                         {% for user in users %}
                             <h3>{{ user.middlename }}</h3>
                         {% else %}
-                            <h3>No middlename found</h3>
+                            <h3>No Middlename Found</h3>
                         {% endfor %}
-                    </section>
-                    <section class="user-role">
+                    </td>
+                    <td>
                         {% for user in users %}
                             <h3>{{ user.role }}</h3>
                         {% else %}
-                            <h3>No role found</h3>
+                            <h3>No role Found</h3>
                         {% endfor %}
-                    </section>
-                </section>
-            </table> -->
+                    </td>
+                </tr>
+            </table>
         </section>
         <section id="Teacher-Management" class="Teacher-management">
             <h1>Teacher Management</h1>
@@ -156,7 +140,25 @@
                     <button type="submit">Create User</button>
                 </form>
             </section>
-            <section class="teacher-edit">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Middlename</th>
+                    <th>Role</th>
+                </tr>
+                <tr>
+                    <td>
+                        {% for teacher in teacher_list %}
+                            <h3>{{ teacher.id }}</h3>
+                        {% else %}
+                            <h3>No id Found</h3>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+            <!-- <section class="teacher-edit">
                 <section class="teacherinfo-title">
                     <p>ID</p>
                     <p>Firstname</p>
@@ -201,7 +203,7 @@
                         {% endfor %}
                     </section>
                 </section>
-            </section>
+            </section> -->
         </section>
     </div>
 </body>

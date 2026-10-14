@@ -97,7 +97,12 @@ def create_app():
                 
                 return redirect(url_for('index'))
             
-            return "Invalid email or password."
+            return '''
+                <script>
+                    alert("Invalid email or password.");
+                    window.location.href = "index.html";
+                </script>
+            '''
         
         return render_template('index.html')
 
@@ -153,6 +158,8 @@ def create_app():
         cursor.execute("SELECT id, firstname, middlename, lastname, email, role FROM users")
         user_list = cursor.fetchall()
 
+        
+
         cursor.close()
         conn.close()
 
@@ -190,7 +197,12 @@ def create_app():
 
                 return redirect(url_for('admin_dashboard'))
 
-            return "Please fill in all required fields."
+            return '''
+                <script>
+                    alert("Please fill in all required fields.");
+                    window.location.href = "admin-dashboard.html";
+                </script>
+            '''
         
         return render_template('admin-dashboard.html')
 
@@ -216,7 +228,12 @@ def create_app():
 
                 return redirect(url_for('admin_dashboard'))
 
-            return "Please fill in all required fields."
+            return '''
+                <script>
+                    alert("Please fill in all required fields.");
+                    window.location.href = "admin-dashboard.html";
+                </script>
+            '''
         
         return render_template('admin-dashboard.html')
 
@@ -240,7 +257,12 @@ def create_app():
 
                 return redirect(url_for('index'))
 
-            return "Please fill in all required fields."
+            return '''
+                <script>
+                    alert("Please fill in all required fields.");
+                    window.location.href = "reset.html";
+                </script>
+            '''
         
         return render_template('reset.html')
 
