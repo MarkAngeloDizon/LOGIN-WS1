@@ -3,62 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="static/css/student-dashboard.css">
-    <title>Student-Dashboard</title>
+    <title>SNHS LMS | Student Dashboard</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/student-dashboard.css">
 </head>
 <body>
-    <div class="side-container">
-        <nav class="sidebar">
-            <img src="/static/img/Untitled design.svg" alt="logo" class="logo">
-            <p>Serenity National High School LMS</p>
-            <ul>
-                <li><a href="#Home"><i class="fa-solid fa-home"></i>  Home</a></li>
-                <li><a href="#Courses"><i class="fa-solid fa-layer-group"></i>  Courses</a></li>
-                <li><a href="#Grades"><i class="fa-solid fa-chart-bar"></i> Grades</a></li>
-                <li><a href="#Profile"><i class="fa-solid fa-gear"></i>  Setting</a></li>
-                <li><a href="/logout"><i class="fa-solid fa-sign-out-alt"></i>  Logout</a></li>
-            </ul>
-        </nav>
-    </div>
 
-    <div class="main-content">
-        <div href="#Home" class="dashboard-container">
-            <h2>Dashboard</h2>
-                <h3>Welcome, {{ firstname }} {{ middlename }} {{ lastname }}!</h3>
-                <p>Here's a quick overview of your account.</p>
-            <div class="dashboard-card">
-                <section class="courses-card">
-                    <h4>Enrolled Courses</h4>
-                    <p>Description of Course 1.</p>
-                </section>
-                <section class="pending-ass-card">
-                    <h4>Pending Assignments</h4>
-                    <p>Description of Course 2.</p>
-                </section>
-                <section class="current-card">
-                    <h4>Current Courses</h4>
-                    <p>Description of Course 3.</p>
-                </section>
-                <section class="todays-card">
-                    <h4>Today's Classes</h4>
-                    <p>Description of Course 4.</p>
-                </section>
+    <header class="topbar">
+        <button type="button" id="menu-toggle" class="icon-btn"
+                aria-label="Toggle menu" aria-controls="sidebar"
+                aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <strong>SNHS LMS</strong>
+    </header>
+
+    <div id="backdrop" class="backdrop"></div>
+
+    <aside id="sidebar" class="sidebar">
+        <div class="brand">
+            <img src="/static/img/Untitled design.svg"
+                 alt="SNHS Logo">
+            <strong>Serenity National High School</strong>
+            <span>Student Portal</span>
+        </div>
+
+        <div class="profile">
+            <div class="avatar">
+                {{ current_user.initials if current_user else 'S' }}
+            </div>
+            <div>
+                <strong>{{ current_user.full_name if current_user else 'Student' }}</strong>
+                <span>{{ current_user.role_label if current_user else 'Student' }}</span>
             </div>
         </div>
 
-        <div href="#Courses" class="course-container">
-            <h2>Courses</h2>
-            <label for="search-course">Search Courses:</label>
-            <input type="text" id="search-course" name="search-course" placeholder="Search for courses...">
-            <button type="button">Search</button>
+        <nav class="nav">
+            <a class="nav-link active" href="#overview">
+                <i class="fa-solid fa-house"></i><span>Overview</span>
+            </a>
+            <a class="nav-link" href="#subjects">
+                <i class="fa-solid fa-book-open"></i><span>My Subjects</span>
+            </a>
+            <a class="nav-link" href="#assignments">
+                <i class="fa-solid fa-clipboard-list"></i><span>Assignments</span>
+            </a>
+            <a class="nav-link" href="#schedule">
+                <i class="fa-solid fa-calendar-days"></i><span>Schedule</span>
+            </a>
+        </nav>
+
+        <a class="nav-link logout" href="{{ url_for('logout') }}">
+            <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+        </a>
+    </aside>
+
+    <main class="main">
+
+        <!-- OVERVIEW -->
+        <section id="overview" class="section hero">
+            <h1>Welcome, {{ current_user.firstname if current_user else 'Student' }}!</h1>
+            <p>Here's what's happening with your studies today.</p>
+        </section>
+
+        <div class="stats">
+            <section class="stat">
+                <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+                <div>
+                    <h3>Today's Schedule</h3>
+                    <p>No classes scheduled for today.</p>
+                </div>
+            </section>
+
+            <section class="stat">
+                <div class="stat-icon"><i class="fa-solid fa-list-check"></i></div>
+                <div>
+                    <h3>Pending Tasks</h3>
+                    <p>You have no pending tasks.</p>
+                </div>
+            </section>
+
+            <section class="stat">
+                <div class="stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+                <div>
+                    <h3>Upcoming Deadlines</h3>
+                    <p>No upcoming deadlines.</p>
+                </div>
+            </section>
         </div>
-        <div href="#Grades" class="grades-container">
-            <h2>My Grades</h2>
-            <label for="search-grades">Search Grades:</label>
-            <input type="text" id="search-grades" name="search-grades" placeholder="Search for grades...">
-            <button type="button">Search</button>
-        </div>
-    </div>
+
+        <!-- MY SUBJECTS -->
+        <section id="subjects" class="section card">
+            <div class="card-head">
+                <h2><i class="fa-solid fa-book-open"></i> My Subjects</h2>
+                <p>Subjects you are enrolled in.</p>
+            </div>
+            <div class="empty">
+                <i class="fa-solid fa-book"></i>
+                <p>You are not enrolled in any subjects yet.</p>
+            </div>
+        </section>
+
+        <!-- ASSIGNMENTS -->
+        <section id="assignments" class="section card">
+            <div class="card-head">
+                <h2><i class="fa-solid fa-clipboard-list"></i> My Assignments</h2>
+                <p>Work assigned by your teachers.</p>
+            </div>
+            <div class="empty">
+                <i class="fa-solid fa-clipboard-check"></i>
+                <p>No assignments yet. You're all caught up!</p>
+            </div>
+        </section>
+
+        <!-- SCHEDULE -->
+        <section id="schedule" class="section card">
+            <div class="card-head">
+                <h2><i class="fa-solid fa-calendar-days"></i> My Schedule - Weekly</h2>
+                <p>Your classes for the week.</p>
+            </div>
+
+            <div class="week">
+                <div class="day"><h4>Mon</h4><p>No classes</p></div>
+                <div class="day"><h4>Tue</h4><p>No classes</p></div>
+                <div class="day"><h4>Wed</h4><p>No classes</p></div>
+                <div class="day"><h4>Thu</h4><p>No classes</p></div>
+                <div class="day"><h4>Fri</h4><p>No classes</p></div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            &copy; 2026 Serenity National High School LMS
+        </footer>
+    </main>
 </body>
 </html>

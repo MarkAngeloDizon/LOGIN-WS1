@@ -3,186 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="/static/css/admin-dashboard.css">
-    <title>Admin-LMS</title>
+
+    <title>SNHS LMS | Admin Dashboard</title>
 </head>
 <body>
-    <div class="sidebar">
-        <section class="logo">
-            <img src="/static/img/Untitled design.svg" alt="logo">
-            <span>Welcome, {{ role }} {{ lastname }}</span>
+
+    <aside id="sidebar-container">
+        <div id="logo">
+            <img src="/static/img/Untitled design.svg" alt="SNHS logo">
+
+            <span>Welcome, {{ session.get('role', 'admin')|title }} {{ session.get('lastname', '') }}</span>
             <p>Serenity National High School</p>
-        </section>
-        <nav class="nav">
+        </div>
+
+        <nav id="nav-bar">
             <ul>
-                <li><a href="#Home"><i class="fa-solid fa-home"></i> Home</a></li>
-                <li><a href="#Student-Management"><i class="fa-solid fa-users"></i> Student Management</a></li>
-                <li><a href="#Teacher-Management"><i class="fa-solid fa-users"></i> Teacher Management</a></li>
-                <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                <li>
+                    <a class="active" href="#overview">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Overview</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#school-settings">
+                        <i class="fa-solid fa-school"></i>
+                        <span>School Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#accounts">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Accounts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#audit-logs">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>Audit Logs</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#backup-restore">
+                        <i class="fa-solid fa-database"></i>
+                        <span>Backup &amp; Restore</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#school-year">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <span>School Year</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('logout') }}" class="logout-link">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
             </ul>
         </nav>
-    </div>
+    </aside>
 
-    <div class="content">
-        <section id="Home" class="dashboard">
-            <div class="dashboard-title">
-            <h1>Dashboard</h1>
-            <h2>Welcome, {{ role }} {{ firstname }} {{ lastname }}!</h2>                
+    <main id="dashboard-container">
+
+        <header id="overview" class="glass-card">
+            <div>
+                <p class="eyebrow">ADMINISTRATION</p>
+                <h1>Welcome, {{ session.get('firstname', 'Admin') }}!</h1>
+                <p>Here's what's happening with your school today.</p>
             </div>
-            <div class="overview">
-                <section class="overview-container">
-                    <section class="users-overview">
-                        <h2>Users</h2>
-                        <h3>{{ users|length }}</h3>
-                    </section>
-                    <section class="accounts-overview">
-                        <h2>Accounts:</h2>
-                        <h3>{{ users|length }}</h3>
-                    </section>
-                </section>
+
+            <div class="admin-profile">
+                <i class="fa-solid fa-user-shield"></i>
+                <span>Administrator</span>
+            </div>
+        </header>
+
+        <section id="dashboard-stats" class="stats-grid">
+            <article class="stat-card glass-card">
+                <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                <p>Total Accounts</p>
+                <h2>{{ stats.total_users }}</h2>
+            </article>
+
+            <article class="stat-card glass-card">
+                <div class="stat-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <p>Teachers</p>
+                <h2>{{ stats.teachers }}</h2>
+            </article>
+
+            <article class="stat-card glass-card">
+                <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <p>Students</p>
+                <h2>{{ stats.students }}</h2>
+            </article>
+
+            <article class="stat-card glass-card">
+                <div class="stat-icon"><i class="fa-solid fa-user-shield"></i></div>
+                <p>Administrators</p>
+                <h2>{{ stats.admins }}</h2>
+            </article>
+        </section>
+
+        <section id="school-settings" class="content-section glass-card">
+            <div class="section-heading">
+                <i class="fa-solid fa-school"></i>
+                <h2>School Settings</h2>
+            </div>
+            <p>Manage school information and system preferences.</p>
+            <p class="section-note">School settings form can be added here.</p>
+        </section>
+
+        <section id="accounts" class="content-section glass-card">
+            <div class="section-heading">
+                <i class="fa-solid fa-users"></i>
+                <h2>Accounts</h2>
+            </div>
+
+            <p>Registered accounts retrieved from your database.</p>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.firstname }} {{ user.middlename or '' }} {{ user.lastname }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                <span class="role-badge {{ user.role }}">
+                                    {{ user.role|title }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="empty-state">No accounts found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </section>
-        <section id="Student-Management" class="user-management">
-            <h1>Student Management</h1>
-            <section class="finduser">
-                <label for="search-user">Search User:</label>
-                <input type="text" id="search-user" name="search-user" placeholder="search for user...">
-                <button type="button">Search</button>
-            </section>
 
-            <section class="add-user">
-                <form action="/adduser" class="adduser" method="POST">
-                    <label for="lastname">Lastname:</label>
-                    <input type="text" name="lastname" id="lastname" placeholder="lastname...">
-                    <label for="firstname">Firstname:</label>
-                    <input type="text" name="firstname" id="firstname" placeholder="firstname...">
-                    <label for="middlename">Middlename:</label>
-                    <input type="text" name="middlename" id="middlename" placeholder="middlename...">
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" placeholder="example@gmail.com...">
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" id="password" placeholder="password...">
-                    <button type="submit">Create User</button>
-                </form>
-            </section>
-            <section class="user-edit">
-                <section class="userinfo-title">
-                    <p>ID</p>
-                    <p>Firstname</p>
-                    <p>Lastname</p>
-                    <p>MiddleName</p>
-                    <p>Role</p>
-                </section>
-                <section class="user-info">
-                    <section class="user-id">
-                        {% for user in users %}
-                            <h3>{{ user.id }}</h3>
-                        {% else %}
-                            <h3>No id found</h3>
-                        {% endfor %}
-                    </section>
-                    <section class="user-ln">
-                        {% for user in users %}
-                            <h3>{{ user.firstname }}</h3>
-                        {% else %}
-                            <h3>No firstname found</h3>
-                        {% endfor %}
-                    </section>
-                    <section class="user-fn">
-                        {% for user in users %}
-                            <h3>{{ user.lastname }}</h3>
-                        {% else %}
-                            <h3>No lastname found</h3>
-                        {% endfor %}
-                    </section>
-                    <section class="user-mn">
-                        {% for user in users %}
-                            <h3>{{ user.middlename }}</h3>
-                        {% else %}
-                            <h3>No middlename found</h3>
-                        {% endfor %}
-                    </section>
-                    <section class="user-role">
-                        {% for user in users %}
-                            <h3>{{ user.role }}</h3>
-                        {% else %}
-                            <h3>No role found</h3>
-                        {% endfor %}
-                    </section>
-                </section>
-            </section>
+        <section id="audit-logs" class="content-section glass-card">
+            <div class="section-heading">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <h2>Audit Logs</h2>
+            </div>
+            <p>Review administrative and account activities.</p>
+            <p class="section-note">An audit_logs database table is needed to save and display activity history.</p>
         </section>
-        <section id="Teacher-Management" class="Teacher-management">
-            <h1>Teacher Management</h1>
-            <section class="finduser">
-                <label for="search-teacher">Search Teacher:</label>
-                <input type="text" id="search-teacher" name="search-teacher" placeholder="search for teacher...">
-                <button type="button">Search</button>
-            </section>
 
-            <section class="add-teacher">
-                <form action="/addteacher" class="addteacher" method="POST">
-                    <label for="lastname">Lastname:</label>
-                    <input type="text" name="lastname" id="lastname" placeholder="lastname...">
-                    <label for="firstname">Firstname:</label>
-                    <input type="text" name="firstname" id="firstname" placeholder="firstname...">
-                    <label for="middlename">Middlename:</label>
-                    <input type="text" name="middlename" id="middlename" placeholder="middlename...">
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" placeholder="example@gmail.com...">
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" id="password" placeholder="password...">
-                    <button type="submit">Create User</button>
-                </form>
-            </section>
-            <section class="teacher-edit">
-                <section class="teacherinfo-title">
-                    <p>ID</p>
-                    <p>Firstname</p>
-                    <p>Lastname</p>
-                    <p>MiddleName</p>
-                    <p>Role</p>
-                </section>
-                <section class="teacher-info">
-                    <section class="teacher-id">
-                        {% for user in users %}
-                            <h3>{{ user.id }}</h3>
-                        {% else %}
-                            <h3>No id found</h3>
-                        {% endfor %}
-                    </section>
-                    <section class="teacher-ln">
-                        {% for user in users %}
-                            <h3>{{ user.firstname }}</h3>
-                        {% else %}
-                            <h3>No firstname found</h3>
-                        {% endfor %}
-                    </section>
-                    <section class="teacher-fn">
-                        {% for user in users %}
-                            <h3>{{ user.lastname }}</h3>
-                        {% else %}
-                            <h3>No lastname found</h3>
-                        {% endfor %}
-                    </section>
-                    <section class="teacher-mn">
-                        {% for user in users %}
-                            <h3>{{ user.middlename }}</h3>
-                        {% else %}
-                            <h3>No middlename found</h3>
-                        {% endfor %}
-                    </section>
-                    <section class="teacher-role">
-                        {% for user in users %}
-                            <h3>{{ user.role }}</h3>
-                        {% else %}
-                            <h3>No role found</h3>
-                        {% endfor %}
-                    </section>
-                </section>
-            </section>
+        <section id="backup-restore" class="content-section glass-card">
+            <div class="section-heading">
+                <i class="fa-solid fa-database"></i>
+                <h2>Backup &amp; Restore</h2>
+            </div>
+            <p>Database backup and restoration tools.</p>
+            <p class="section-note">Backup and restore actions are not enabled by this interface alone.</p>
         </section>
-    </div>
+
+        <section id="school-year" class="content-section glass-card">
+            <div class="section-heading">
+                <i class="fa-solid fa-calendar-days"></i>
+                <h2>School Year</h2>
+            </div>
+            <p>Manage the active school year.</p>
+            <p class="section-note">A school_years table and save/update actions are needed to persist changes.</p>
+        </section>
+
+        <footer>
+            <p>&copy; {{ current_year }} Serenity National High School LMS</p>
+        </footer>
+
+    </main>
 </body>
 </html>

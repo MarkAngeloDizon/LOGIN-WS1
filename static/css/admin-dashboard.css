@@ -1,605 +1,431 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 25px;
+}
+
+body {
     font-family: Arial, sans-serif;
-    background-image: url('/static/img/bg.webp');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    display: flex;
+    background: #1b0f08 url('/static/img/bg.webp') center / cover fixed no-repeat;
     min-height: 100vh;
-    color: #333;
-}
-
-.sidebar {
-    width: 230px;
-    background-color: #f2c75c;
     color: #fff;
-    padding: 20px;
-    height: 100vh;
+}
+
+#sidebar-container {
     position: fixed;
-    left: 0;
-    top: 0;
+    inset: 0 auto 0 0;
+    width: 250px;
+    height: 100vh;
+    padding: 20px 15px;
+    overflow-y: auto;
+    background: #f2c75c;
+    color: #000;
+    z-index: 1000;
 }
 
-.sidebar p {
+#logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 150px;
+    padding: 10px;
     text-align: center;
-    margin-bottom: 20px;
-    color: #000000;
 }
 
-.sidebar ul {
-    list-style-type: none;
+#logo img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+}
+
+#logo span {
+    font-family: 'Times New Roman', serif;
+    font-size: 12px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+#logo p {
+    font-family: 'Times New Roman', serif;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+#nav-bar ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
     margin-top: 20px;
 }
 
-.sidebar li {
-    font-size: 14px;
-    margin-bottom: 10px;
-    background-color: #e48a24;
-    border-radius: 5px;
-    text-align: center;
+#nav-bar li {
+    width: 100%;
 }
 
-
-.sidebar a {
-    color: #000000;
+#nav-bar a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 44px;
+    padding: 12px;
+    border-radius: 6px;
+    background: #e48a24;
+    color: #17100a;
     text-decoration: none;
-    display: block;
-    padding: 10px;
+    font-size: 14px;
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.sidebar li:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease;
-}
-.sidebar p {
-    font-size: 14px;
-    font-family: 'Times New Roman', Times, serif;
-    margin-bottom: 20px;
+#nav-bar a i {
+    width: 18px;
     text-align: center;
 }
 
-.sidebar img {
-    width: 50px;
-    height: 50px;
-    border-radius: 10%;
+#nav-bar a:hover,
+#nav-bar a.active {
+    background: #d97919;
+    transform: translateX(3px);
 }
 
-.sidebar span {
-    color: #000000;
-    font-family:'Times New Roman', Times, serif;
+#nav-bar .logout-link {
+    margin-top: 12px;
+    background: #bd4b28;
+    color: #fff;
+}
+
+#nav-bar .logout-link:hover {
+    background: #a83d20;
+}
+
+#dashboard-container {
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    margin-left: 250px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.glass-card {
+    background: rgba(246, 231, 193, 0.12);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 183, 0, 0.35);
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+#overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 30px;
+    scroll-margin-top: 25px;
+}
+
+.eyebrow {
+    color: #f2c75c;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+#overview h1 {
+    color: #f2c75c;
+    font-size: clamp(22px, 2.5vw, 32px);
+    margin-bottom: 10px;
+    overflow-wrap: anywhere;
+}
+
+#overview > div > p:last-child {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border: 1px solid rgba(242, 199, 92, 0.4);
+    border-radius: 8px;
+    color: #f2c75c;
+    font-size: 13px;
+}
+
+.admin-profile i {
+    font-size: 22px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.stat-card {
+    padding: 22px;
+    min-width: 0;
+}
+
+.stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 16px;
+    border-radius: 9px;
+    background: rgba(228, 138, 36, 0.2);
+    color: #f2c75c;
+    font-size: 20px;
+}
+
+.stat-card p {
+    color: #eee2ce;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.stat-card h2 {
+    margin-top: 10px;
+    color: #f2c75c;
+    font-size: 28px;
+    overflow-wrap: anywhere;
+}
+
+.content-section {
+    min-width: 0;
+    padding: 25px;
+    scroll-margin-top: 25px;
+    transition: background 0.2s ease;
+}
+
+.content-section:hover {
+    background-color: rgba(246, 231, 193, 0.16);
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.section-heading i {
+    color: #e48a24;
+    font-size: 20px;
+}
+
+.section-heading h2 {
+    color: #f2c75c;
+    font-size: 20px;
+    overflow-wrap: anywhere;
+}
+
+.content-section > p {
+    color: #f4eee5;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.content-section .section-note {
+    margin-top: 12px;
+    color: #d8c8b0;
     font-size: 12px;
 }
 
-.content {
-    margin-left: 250px;
-    padding: 10px;
-    height: 100vh;
+.table-wrapper {
     width: 100%;
-    overflow-y: auto;
+    margin-top: 20px;
+    overflow-x: auto;
+    border-radius: 6px;
 }
 
-#Home,
-#Student-Management,
-#Teacher-Management {
-    background-color: rgba(246, 231, 193, 0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 183, 0, 0.35);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+table {
     width: 100%;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    overflow-y: auto;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
 }
 
-.dashboard-title h1 {
-    color: #e48a24;
-    font-family: cursive;
+th,
+td {
+    padding: 14px 12px;
+    border-bottom: 1px solid rgba(242, 199, 92, 0.2);
+    vertical-align: middle;
 }
 
-.dashboard-title h2 {
+th {
+    background: rgba(242, 199, 92, 0.15);
     color: #f2c75c;
-    font-family:'Times New Roman', Times, serif;
+    white-space: nowrap;
 }
 
-.overview {
-    background-color: rgba(246, 231, 193, 0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 183, 0, 0.35);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    overflow-y: auto;
-    
+td {
+    color: #fff;
+    overflow-wrap: anywhere;
 }
 
-.overview-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
-.users-overview,
-.courses-overview,
-.accounts-overview {
-    background-color: rgba(246, 231, 193, 0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(242, 199, 92, 0.35);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    gap: 10px;
-    padding: 10px;
-    margin: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px; 
+tbody tr:hover {
+    background: rgba(242, 199, 92, 0.08);
 }
 
-.overview-container h2 {
+.role-badge {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: rgba(228, 138, 36, 0.2);
     color: #f2c75c;
-}
-#Student-Management h1,
-#Teacher-Management h1 {
-    color: #e48a24;
+    font-size: 11px;
 }
 
-#Student-Management label,
-#Teacher-Management label {
-    color: #f2c75c;
-    font-family: 'Times New Roman', Times, serif;
+.empty-state {
+    padding: 25px;
+    text-align: center;
+    color: #d8c8b0;
 }
 
-
-#Student-Management input[type='text'],
-#Teacher-Management input[type='text'] {
-    background: transparent;
-    padding: 5px;
-    width: 50vh;
-    border-color: #e48a24;
-    border-radius: 10px;
-    font-family: 'Times New Roman', Times, serif;
-    color: #f2c75c;
+footer {
+    margin-top: auto;
+    padding: 10px 0;
+    text-align: center;
+    color: #d8c8b0;
+    font-size: 12px;
 }
 
-#Student-Management button,
-#Teacher-Management button {
-    color: #0e0d0d;
-    background-color:#e48a24;
-    padding: 8px;
-    border-radius: 10px;
-    border: none;
-}
-
-#Student-Management button:hover,
-#Teacher-Management button:hover{
-    color: #f2c75c;
-}
-
-.userinfo-title,
-.teacherinfo-title {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    color: #f2c75c;
-    margin-top: 10px;
-        overflow-y: auto;
-}
-
-.user-info,
-.teacher-info {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    overflow-y: auto;  
-}
-
-.user-info h3,
-.teacher-info h3 {
-    color: #000000;
-    background-color: rgba(246, 231, 193, 0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(242, 199, 92, 0.35);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 5px;  
-}
-
-.add-user,
-.add-teacher {
-    background-color: rgba(246, 231, 193, 0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(242, 199, 92, 0.35);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 40%;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 5px;
-}
-
-.add-user input[type="text"],
-.add-user input[type="email"],
-.add-user input[type="password"],
-.add-teacher input[type='text'],
-.add-teacher input[type='email'], 
-.add-teacher input[type='password'] {
-    margin: 10px;
-    display: flex;
-    background: transparent;
-    padding: 5px;
-    width: 50vh;
-    border-color: #e48a24;
-    border-radius: 10px;
-    font-family: 'Times New Roman', Times, serif;
-    color: #f2c75c;   
-}
-.form-group {
-    background-color: rgba(246, 231, 193, 0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(242, 199, 92, 0.35);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    width: 500px;
-    margin-bottom: 5px;
-    border-radius: 10px;
-    overflow-y: auto;
-}
-
-.form-group label {
-    color: #f2c75c;
-    font-family: 'Times New Roman', Times, serif;
-    overflow-y: auto;
-}
-
-.finduser input[type='text']{
-    background: transparent;
-    padding: 5px;
-    width: 50vh;
-    border-color: #e48a24;
-    border-radius: 10px;
-    font-family: 'Times New Roman', Times, serif;
-    color: #f2c75c;   
-}
-
-.course-container button {
-    color: #0e0d0d;
-    background-color:#e48a24;
-    padding: 8px;
-    border-radius: 10px;
-    border: none;   
-}
-
-.course-container button:hover{
-    background-color: #f2c75c;
-    color: #e48a24;
-}
-
-.show-course {
-    margin: 10px;
-}
-
-.courseinfo-title {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    color: #e48a24;
-    padding: 10px;
-}
-
-.course-info { 
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    color: #f2c75c;
-    margin-top: 10px;
-    gap: 10px;
-}
-
-.course-info h3 {
-    color: #000000;
-    background-color: rgba(246, 231, 193, 0.12);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(242, 199, 92, 0.35);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-@media (max-width: 1024px) {
-
-    .sidebar {
-        width: 200px;
-        padding: 15px;
+@media (max-width: 1200px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .content {
+    #dashboard-container {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 900px) {
+    #sidebar-container {
+        width: 215px;
+        padding: 15px 12px;
+    }
+
+    #dashboard-container {
+        width: calc(100% - 215px);
         margin-left: 215px;
-        padding: 15px;
-    }
-
-    .overview-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .add-user,
-    .add-teacher {
-        width: 60%;
-    }
-
-    .form-group {
-        width: 100%;
-        max-width: 500px;
-    }
-
-    #Student-Management input[type="text"],
-    #Teacher-Management input[type="text"],
-    .finduser input[type="text"],
-    .add-user input[type="text"],
-    .add-user input[type="email"],
-    .add-user input[type="password"],
-    .add-teacher input[type="text"],
-    .add-teacher input[type="email"],
-    .add-teacher input[type="password"] {
-        width: 100%;
-        box-sizing: border-box;
-    }
-}
-
-@media (max-width: 768px) {
-
-    body {
-        display: block;
-    }
-
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        padding: 15px;
-    }
-
-    .sidebar p {
-        margin-bottom: 10px;
-    }
-
-    .sidebar ul {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-        margin-top: 10px;
-    }
-
-    .sidebar li {
-        margin-bottom: 0;
-    }
-
-    .sidebar a {
-        padding: 10px 5px;
-        font-size: 13px;
-    }
-
-    .content {
-        margin-left: 0;
-        width: 100%;
-        height: auto;
-        padding: 15px;
-        overflow-y: visible;
-    }
-
-    #Home,
-    #Student-Management,
-    #Teacher-Management {
         padding: 20px;
     }
 
-    .overview-container {
-        grid-template-columns: 1fr;
+    #overview {
+        padding: 22px;
     }
 
-    .users-overview,
-    .courses-overview,
-    .accounts-overview {
-        margin: 8px;
-    }
-
-    .userinfo-title,
-    .teacherinfo-title,
-    .user-info,
-    .teacher-info {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .add-user,
-    .add-teacher {
-        width: 100%;
-        margin: 10px 0;
-    }
-
-    .form-group {
-        width: 100%;
-    }
-
-    .courseinfo-title,
-    .course-info {
-        grid-template-columns: repeat(2, 1fr);
+    .content-section {
+        padding: 20px;
     }
 }
 
-@media (max-width: 480px) {
-
-    body {
-        min-height: 100vh;
-    }
-
-    .sidebar {
+@media (max-width: 650px) {
+    #sidebar-container {
+        position: relative;
+        width: 100%;
+        height: auto;
         padding: 12px;
     }
 
-    .sidebar ul {
-        grid-template-columns: 1fr;
-        gap: 6px;
+    #logo {
+        min-height: auto;
+        padding: 8px;
     }
 
-    .sidebar li {
-        font-size: 13px;
+    #nav-bar ul {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
     }
 
-    .sidebar a {
-        padding: 9px;
-    }
-
-    .content {
+    #nav-bar a {
+        min-height: 44px;
         padding: 10px;
+        gap: 8px;
+        font-size: 12px;
     }
 
-    #Home,
-    #Student-Management,
-    #Teacher-Management {
+    #nav-bar a:hover,
+    #nav-bar a.active {
+        transform: none;
+    }
+
+    #nav-bar .logout-link {
+        margin-top: 0;
+    }
+
+    #dashboard-container {
+        width: 100%;
+        margin-left: 0;
         padding: 15px;
-        margin-bottom: 15px;
+        gap: 16px;
     }
 
-    .dashboard-title h1 {
+    #overview {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .stats-grid {
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+    .stat-card h2 {
         font-size: 24px;
     }
 
-    .dashboard-title h2 {
-        font-size: 20px;
-    }
-
-    .overview-container {
-        grid-template-columns: 1fr;
-    }
-
-    .users-overview,
-    .courses-overview,
-    .accounts-overview {
-        margin: 5px 0 15px;
-        padding: 10px;
-    }
-
-    .userinfo-title,
-    .teacherinfo-title,
-    .user-info,
-    .teacher-info {
-        grid-template-columns: 1fr;
-    }
-
-    .user-info h3,
-    .teacher-info h3 {
-        margin-bottom: 10px;
-        padding: 8px;
-        font-size: 14px;
-    }
-
-    .add-user,
-    .add-teacher {
-        width: 100%;
-        margin: 10px 0;
-        padding: 10px;
-    }
-
-    .form-group {
-        width: 100%;
-        padding: 10px;
-    }
-
-    #Student-Management input[type="text"],
-    #Teacher-Management input[type="text"],
-    .finduser input[type="text"],
-    .add-user input[type="text"],
-    .add-user input[type="email"],
-    .add-user input[type="password"],
-    .add-teacher input[type="text"],
-    .add-teacher input[type="email"],
-    .add-teacher input[type="password"] {
-        width: 100%;
-        margin: 5px 0;
-        padding: 8px;
-    }
-
-    #Student-Management button,
-    #Teacher-Management button,
-    .course-container button {
-        width: 100%;
-        margin-top: 5px;
-    }
-
-    .courseinfo-title,
-    .course-info {
-        grid-template-columns: 1fr;
-    }
-
-    .show-course {
-        margin: 5px 0;
+    .content-section {
+        padding: 18px;
     }
 }
 
 @media (max-width: 360px) {
-
-    .sidebar {
-        padding: 10px;
-    }
-
-    .sidebar img {
-        width: 40px;
-        height: 40px;
-    }
-
-    .sidebar span {
+    #nav-bar a {
+        gap: 6px;
+        padding: 8px;
         font-size: 11px;
     }
 
-    .sidebar a {
-        font-size: 12px;
-        padding: 8px;
+    #dashboard-container {
+        padding: 10px;
     }
 
-    .content {
-        padding: 8px;
+    .stats-grid {
+        grid-template-columns: minmax(0, 1fr);
     }
 
-    #Home,
-    #Student-Management,
-    #Teacher-Management {
-        padding: 12px;
+    #overview,
+    .content-section {
+        padding: 15px;
     }
 
-    .dashboard-title h1 {
-        font-size: 21px;
-    }
-
-    .dashboard-title h2 {
+    .section-heading h2 {
         font-size: 18px;
-    }
-
-    .overview-container h2 {
-        font-size: 17px;
-    }
-
-    .user-info h3,
-    .teacher-info h3,
-    .course-info h3 {
-        font-size: 13px;
-        padding: 7px;
-    }
-
-    .form-group label {
-        font-size: 13px;
-    }
-
-    #Student-Management button,
-    #Teacher-Management button,
-    .course-container button {
-        padding: 7px;
-        font-size: 12px;
     }
 }

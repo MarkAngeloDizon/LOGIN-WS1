@@ -3,28 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <title>SNHS LMS | Teacher Dashboard</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="/static/css/teacher-dashboard.css">
-    <title>Teacher RMS</title>
+    <script src="/static/js/teacherdashboard.js" defer></script>
 </head>
 <body>
-    <div class="sidebar">
-        <section class="logo">
-            <img src="/static/img/Untitled design.svg" alt="logo">
-            <p>Serinity National High School Teacher Portal</p>
-        </section>
-        <section class="navbar">
-            <ul class="nav">
-                <li><a href="#dashboard-container"><i class="fa-solid fa-home"></i></a> Dashboard</li>
-                <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a> Logout</li>
-            </ul>
-        </section>
-    </div>
-    <div class="main-content">
-        <div id="dashboard-container">
-            <h1>Dashboard</h1>
-            <h2>Welcome, {{ role }} {{ firstname }} {{ lastname }} </h2>
+
+    <header class="topbar">
+        <button type="button" id="menu-toggle" class="icon-btn"
+                aria-label="Toggle menu" aria-controls="sidebar"
+                aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <strong>SNHS LMS</strong>
+    </header>
+
+    <div id="backdrop" class="backdrop"></div>
+
+    <aside id="sidebar" class="sidebar">
+        <div class="brand">
+            <img src="/static/img/Untitled design.svg"
+                 alt="SNHS Logo">
+            <div>
+                <strong>Serenity National</strong>
+                <span>High School LMS</span>
+            </div>
         </div>
-    </div>
+
+        <div class="profile">
+            <div class="avatar">
+                {{ ((current_user.initials) if current_user else 'T') }}
+            </div>
+            <div>
+                <strong>{{ current_user.full_name if current_user else 'Teacher' }}</strong>
+                <span>{{ current_user.role_label if current_user else 'Teacher' }}</span>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <a class="nav-link active" href="#overview">
+                <i class="fa-solid fa-house"></i><span>Overview</span>
+            </a>
+            <a class="nav-link" href="#classes">
+                <i class="fa-solid fa-chalkboard-user"></i><span>My Classes</span>
+            </a>
+            <a class="nav-link" href="#course-content">
+                <i class="fa-solid fa-book-open"></i><span>Course Content</span>
+            </a>
+            <a class="nav-link" href="#assignments">
+                <i class="fa-solid fa-clipboard-list"></i><span>Assignments</span>
+            </a>
+            <a class="nav-link" href="#attendance">
+                <i class="fa-solid fa-calendar-check"></i><span>Attendance</span>
+            </a>
+        </nav>
+
+        <a class="nav-link logout" href="{{ url_for('logout') }}">
+            <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+        </a>
+    </aside>
+
+    <main class="main">
+
+        <!-- OVERVIEW -->
+        <section id="overview" class="section hero">
+            <h1>Welcome back, {{ current_user.firstname if current_user else 'Teacher' }}</h1>
+            <p>Here's what's happening with your classes today.</p>
+        </section>
+
+        <div class="stats">
+            <a class="stat" href="#classes">
+                <div class="stat-icon blue"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <div>
+                    <span class="stat-number">{{ classes|length }}</span>
+                    <span class="stat-label">Assigned classes</span>
+                </div>
+            </a>
+            <a class="stat" href="#assignments">
+                <div class="stat-icon violet"><i class="fa-solid fa-list-check"></i></div>
+                <div>
+                    <span class="stat-number">{{ assignments|length }}</span>
+                    <span class="stat-label">Assignments</span>
+                </div>
+            </a>
+            <a class="stat" href="#attendance">
+                <div class="stat-icon green"><i class="fa-solid fa-calendar-check"></i></div>
+                <div>
+                    <span class="stat-number">Attendance</span>
+                    <span class="stat-label">Record and update</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- MY CLASSES -->
+        <section id="classes" class="section card">
+            <div class="card-head">
+                <h2><i class="fa-solid fa-chalkboard"></i> My Classes</h2>
+                <p>Your assigned classes and subjects.</p>
+            </div>
+
+            <div class="grid">
+                {% for c in classes %}
+                <article class="item">
+                    <h3>{{ c.class_name }}</h3>
+                    <p class="muted">Subject: {{ c.subject }}</p>
+                    <a class="btn btn-ghost"
+                       href="{{ url_for('teacher_dashboard', class_id=c.id) }}#attendance">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        Manage attendance
+                    </a>
+                </article>
+                {% else %}
+                <div class="empty">
+                    <i class="fa-solid fa-book-open"></i>
+                    <p>No classes have been assigned to you yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- COURSE CONTENT -->
+        <section id="course-content" class="section card">
+            <div class="card-head">
+                <h2><i class="fa-solid fa-folder-open"></i> Course Content</h2>
+                <p>Manage lessons and learning materials.</p>
+            </div>
+            <div class="empty">
+                <i class="fa-solid fa-file-lines"></i>
+                <p>Course materials management can be added next.</p>
+            </div>
+        </section>
+
+        <!-- ASSIGNMENTS -->
+        <section id="assignments" class="section card">
+            <div class="card-head">
+                <h2><i class="fa-solid fa-clipboard-list"></i> Manage Assignments</h2>
+                <p>Create, edit and delete assignments for your classes.</p>
+            </div>
+
+            <form action="{{ url_for('create_assignment') }}"
+                  method="POST" class="form panel">
+                <h3>Create a new assignment</h3>
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="assignment-class">Class</label>
+                        <select id="assignment-class" name="class_id" required>
+                            <option value="">Select a class</option>
+                            {% for c in classes %}
+                            <option value="{{ c.id }}">{{ c.class_name }} — {{ c.subject }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="assignment-title">Title</label>
+                        <input id="assignment-title" name="title"
+                               type="text" maxlength="200" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="assignment-due">Due date</label>
+                        <input id="assignment-due" name="due_date"
+                               type="datetime-local">
+                    </div>
+
+                    <div class="field">
+                        <label for="assignment-points">Total points</label>
+                        <input id="assignment-points" name="points"
+                               type="number" min="1" value="100" required>
+                    </div>
+
+                    <div class="field full">
+                        <label for="assignment-instructions">Instructions</label>
+                        <textarea id="assignment-instructions"
+                                  name="instructions" rows="4"></textarea>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> Create assignment
+                    </button>
+                </div>
+            </form>
+
+            <h3 class="subhead">Existing assignments</h3>
+
+            <div class="stack">
+                {% for a in assignments %}
+                <article class="item">
+                    <form action="{{ url_for('edit_assignment', assignment_id=a.id) }}"
+                          method="POST" class="form">
+                        <div class="item-title">
+                            <h4>{{ a.class_name }}</h4>
+                            <span class="tag">{{ a.subject }}</span>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="title-{{ a.id }}">Title</label>
+                                <input id="title-{{ a.id }}" name="title"
+                                       type="text" maxlength="200"
+                                       value="{{ a.title }}" required>
+                            </div>
+
+                            <div class="field">
+                                <label for="due-{{ a.id }}">Due date</label>
+                                <input id="due-{{ a.id }}" name="due_date"
+                                       type="datetime-local"
+                                       value="{{ a.due_date.strftime('%Y-%m-%dT%H:%M') if a.due_date else '' }}">
+                            </div>
+
+                            <div class="field">
+                                <label for="points-{{ a.id }}">Total points</label>
+                                <input id="points-{{ a.id }}" name="points"
+                                       type="number" min="1"
+                                       value="{{ a.points }}" required>
+                            </div>
+
+                            <div class="field full">
+                                <label for="instructions-{{ a.id }}">Instructions</label>
+                                <textarea id="instructions-{{ a.id }}"
+                                          name="instructions"
+                                          rows="3">{{ a.instructions or '' }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-floppy-disk"></i> Save changes
+                            </button>
+                        </div>
+                    </form>
+
+                    <form action="{{ url_for('delete_assignment', assignment_id=a.id) }}"
+                          method="POST" class="delete-form"
+                          data-confirm="Delete this assignment?">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa-solid fa-trash"></i> Delete assignment
+                        </button>
+                    </form>
+                </article>
+                {% else %}
+                <div class="empty">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    <p>No assignments have been created yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- ATTENDANCE -->
+        <section id="attendance" class="section card">
+            <div class="card-head">
+                <h2><i class="fa-solid fa-calendar-check"></i> Manage Attendance</h2>
+                <p>Pick a class and date, then mark each student.</p>
+            </div>
+
+            <form action="{{ url_for('teacher_dashboard') }}#attendance"
+                  method="GET" class="form panel">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="attendance-class">Class</label>
+                        <select id="attendance-class" name="class_id" required>
+                            <option value="">Select a class</option>
+                            {% for c in classes %}
+                            <option value="{{ c.id }}"
+                                {% if selected_class == c.id %}selected{% endif %}>
+                                {{ c.class_name }} — {{ c.subject }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="attendance-date">Date</label>
+                        <input id="attendance-date" name="date" type="date"
+                               value="{{ attendance_date }}" required>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-users"></i> Load students
+                    </button>
+                </div>
+            </form>
+
+            {% if selected_class and students %}
+            <form action="{{ url_for('save_attendance') }}"
+                  method="POST" class="form">
+                <input type="hidden" name="class_id" value="{{ selected_class }}">
+                <input type="hidden" name="attendance_date" value="{{ attendance_date }}">
+
+                <h3 class="subhead">Student attendance</h3>
+
+                <div class="attendance-list">
+                    {% for student in students %}
+                    <div class="attendance-row">
+                        <span class="student-name">
+                            {{ student.lastname }}, {{ student.firstname }}
+                        </span>
+
+                        <select name="status_{{ student.id }}"
+                                class="status-select" required>
+                            {% for status in ['Present', 'Absent', 'Late', 'Excused'] %}
+                            <option value="{{ status }}"
+                                {% if attendance_map.get(student.id, 'Present') == status %}selected{% endif %}>
+                                {{ status }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="actions">
+                    <button type="button" id="mark-all-present"
+                            class="btn btn-ghost">
+                        <i class="fa-solid fa-check-double"></i> Mark all present
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-floppy-disk"></i> Save attendance
+                    </button>
+                </div>
+            </form>
+
+            {% elif selected_class %}
+            <div class="empty">
+                <i class="fa-solid fa-user-slash"></i>
+                <p>No students are enrolled in this class yet.</p>
+            </div>
+
+            {% else %}
+            <div class="empty">
+                <i class="fa-solid fa-users"></i>
+                <p>Select a class and date to load student attendance.</p>
+            </div>
+            {% endif %}
+        </section>
+
+        <footer class="footer">
+            &copy; 2026 Serenity National High School LMS
+        </footer>
+    </main>
 </body>
 </html>
