@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+
+.sidebar {
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+
+.sidebar ul {
+    list-style-type: none;
+    margin-top: 20px;
+}
+
+.sidebar li {
+    margin-bottom: 15px;
+}
+
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.sidebar a:hover {
+    text-decoration: underline;
+    background-color: #444;
+}
+
+.sidebar h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.sidebar p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10%;
+    margin-bottom: 5px;
+    margin-left: 50px;
+
+}
+
+.main-content {
+    margin-left: 200px;
+    padding: 10px;
+    min-height: 100vh;
+}
+
+.course-container,
+.dashboard-container,
+.grades-container {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 50px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.dashboard-container h2,
+.course-container h2,
+.grades-container h2 {
+    margin-bottom: 10px;
+}
+
+.dashboard-container p,
+.course-container p,
+.grades-container p {
+    color: #666;
+}
+
+.dashboard-container:hover,
+.course-container:hover,
+.grades-container:hover{
+    transform: scale(0.98);
+    transition: transform 0.3s ease;
+}
+
+.main-content input[type="text"] {
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.main-content button {
+    padding: 10px 20px;
+    background-color: #e48a24;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}

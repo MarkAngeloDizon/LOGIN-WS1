@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/dashboard.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="side-container">
+        <nav class="sidebar">
+            <img src="/static/img/2.webpg" alt="logo" class="logo">
+            <p>Serenity National High School LMS</p>
+            <ul>
+                <li><a href="#Dashboard">Dashboard</a></li>
+                <li><a href="#Courses">Courses</a></li>
+                <li><a href="#Grades">My Grades</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-container">
+            <h2>Dashboard</h2>
+            <p>This is your dashboard content.</p>
+        </div>
+
+        <div class="course-container">
+            <h2>Courses</h2>
+            <label for="search-course">Search Courses:</label>
+            <input type="text" id="search-course" name="search-course" placeholder="Search for courses...">
+            <button type="button">Search</button>
+        </div>
+        <div class="grades-container">
+            <h2>My Grades</h2>
+            <label for="search-grades">Search Grades:</label>
+            <input type="text" id="search-grades" name="search-grades" placeholder="Search for grades...">
+            <button type="button">Search</button>
+        </div>
+    </div>
+</body>
+</html>

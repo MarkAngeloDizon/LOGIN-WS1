@@ -1,0 +1,110 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    background-image: url('/static/img/1.webpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+img{
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    margin-left: 33%;
+    border-radius: 30%;
+}
+
+.register-link{
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.register-link p{           
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+}
+
+.login-container{
+    font-family: Arial, sans-serif;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.login-container h1{
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-container p{
+    font-family:Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-container form{
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"]{
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-container input[type="checkbox"]{
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+}
+
+.login-container label{
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.login-container button{
+    padding: 10px;
+    margin-top: 10px;
+    width: 50%;
+    align-self: center;
+    background-color: #9e5a00;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.login-container a{
+    text-decoration: none;
+    color: #9e5a00;
+    font-size: 14px;
+    text-align: center;
+}
+
+.logo p{
+    font-family: 'Times New Roman', Times, serif;
+}

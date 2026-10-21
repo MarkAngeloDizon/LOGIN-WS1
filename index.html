@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -56,4 +57,64 @@
         </div>
     </div>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>SNHS LMS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="static/css/index.css" rel="stylesheet">
+    </head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-container">
+            <section class="logo">
+                <img src="/static/img/Untitled design.svg" alt="logo">
+                <p>Serenity National High School LMS</p>
+            </section>
+            <p>Please enter your credentials to login.</p>
+            <form action="/login" method="post">
+                <div class="input-field">
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-field">
+                    <label for="password">Password:</label><br>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="input-field">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                    <a href="/reset">Forgot password?</a>
+                </div>
+                <button type="submit">Login</button>
+                <div class="register-link">
+                    <p>
+                        Don't have an account?
+                        <a href="/register">Register</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="credentials">
+            <h2>Account Credentials</h2>
+            <section class="credpass">
+                <h2>Email</h2>
+                <h2>Password</h2>
+                <h2>Role</h2>
+                <h3>Admin@gmail.com</h3>
+                <h3>12345678</h3>
+                <h3>Admin</h3>
+                <h3>Fbenosa@gmail.com</h3>
+                <h3>12345678</h3>
+                <h3>Teacher</h3>
+                <h3>brianacebelarmino@gmail.com</h3>
+                <h3>12345678</h3>
+                <h3>Student</h3>
+            </section>
+        </div>
+    </div>
+</body>
+>>>>>>> 7e8d52789239d111f3726d5c7e448b6538d7f1a9
 </html>
