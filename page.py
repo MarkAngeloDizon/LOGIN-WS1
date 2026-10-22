@@ -49,6 +49,7 @@ ALLOWED_UPLOADS = {
 # --------------------------------------------------
 
 
+
 def get_db_connection():
     if os.getenv("USE_REMOTE_DB") == "1":
         config = {
@@ -56,7 +57,7 @@ def get_db_connection():
             "port": int(os.getenv("DB_PORT", "4000")),
             "user": os.getenv("DB_USER"),
             "password": os.getenv("DB_PASSWORD"),
-            "database": os.getenv("DB_NAME"),
+            "database": os.getenv("DB_NAME", "snhs_lms"),
             "ssl_verify_cert": True,
             "ssl_verify_identity": True,
             "connection_timeout": 15,
