@@ -15,7 +15,7 @@
 
 <aside id="sidebar-container">
     <div id="logo">
-        <img src="/img/Untitled design.svg"
+        <img src="{{ url_for('static', filename='img/Untitled design.svg') }}   "
              alt="SNHS logo">
         <span>
             Welcome, {{ session.get('role', 'admin')|title }}
