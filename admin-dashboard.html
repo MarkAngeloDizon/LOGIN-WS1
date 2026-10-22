@@ -4,190 +4,511 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/admin-dashboard.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet"
+          href="/static/css/admin-dashboard.css">
 
     <title>SNHS LMS | Admin Dashboard</title>
 </head>
 <body>
 
-    <aside id="sidebar-container">
-        <div id="logo">
-            <img src="/static/img/Untitled design.svg" alt="SNHS logo">
+<aside id="sidebar-container">
+    <div id="logo">
+        <img src="/img/Untitled design.svg"
+             alt="SNHS logo">
+        <span>
+            Welcome, {{ session.get('role', 'admin')|title }}
+            {{ session.get('lastname', '') }}
+        </span>
+        <p>Serenity National High School</p>
+    </div>
 
-            <span>Welcome, {{ session.get('role', 'admin')|title }} {{ session.get('lastname', '') }}</span>
-            <p>Serenity National High School</p>
+    <nav id="nav-bar">
+        <ul>
+            <li><a class="active" href="#overview">
+                <i class="fa-solid fa-chart-pie"></i><span>Overview</span>
+            </a></li>
+            <li><a href="#accounts">
+                <i class="fa-solid fa-users"></i><span>Accounts</span>
+            </a></li>
+            <li><a href="#audit-logs">
+                <i class="fa-solid fa-clock-rotate-left"></i><span>Audit Logs</span>
+            </a></li>
+            <li><a href="#backup-restore">
+                <i class="fa-solid fa-database"></i><span>Backup &amp; Restore</span>
+            </a></li>
+            <li><a href="#school-year">
+                <i class="fa-solid fa-calendar-days"></i><span>School Year</span>
+            </a></li>
+            <li><a href="{{ url_for('logout') }}" class="logout-link">
+                <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+            </a></li>
+        </ul>
+    </nav>
+</aside>
+
+<main id="dashboard-container">
+
+    <header id="overview" class="glass-card">
+        <div>
+            <p class="eyebrow">ADMINISTRATION</p>
+            <h1>Welcome, {{ session.get('firstname', 'Admin') }}!</h1>
+            <p>Here's what's happening with your school today.</p>
+        </div>
+        <div class="admin-profile">
+            <i class="fa-solid fa-user-shield"></i>
+            <span>Administrator</span>
+        </div>
+    </header>
+
+    <!-- DASHBOARD STATISTICS -->
+    <section class="stats-grid">
+        <article class="stat-card glass-card">
+            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+            <p>Total Accounts</p>
+            <h2>{{ stats.total_users }}</h2>
+        </article>
+        <article class="stat-card glass-card">
+            <div class="stat-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+            <p>Teachers</p>
+            <h2>{{ stats.teachers }}</h2>
+        </article>
+        <article class="stat-card glass-card">
+            <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <p>Students</p>
+            <h2>{{ stats.students }}</h2>
+        </article>
+        <article class="stat-card glass-card">
+            <div class="stat-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <p>Administrators</p>
+            <h2>{{ stats.admins }}</h2>
+        </article>
+    </section>
+
+    <!-- ACCOUNTS -->
+    <section id="accounts" class="content-section glass-card">
+        <div class="section-heading">
+            <i class="fa-solid fa-users"></i>
+            <h2>Account Management</h2>
         </div>
 
-        <nav id="nav-bar">
-            <ul>
-                <li>
-                    <a class="active" href="#overview">
-                        <i class="fa-solid fa-chart-pie"></i>
-                        <span>Overview</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#school-settings">
-                        <i class="fa-solid fa-school"></i>
-                        <span>School Settings</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#accounts">
-                        <i class="fa-solid fa-users"></i>
-                        <span>Accounts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#audit-logs">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        <span>Audit Logs</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#backup-restore">
-                        <i class="fa-solid fa-database"></i>
-                        <span>Backup &amp; Restore</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#school-year">
-                        <i class="fa-solid fa-calendar-days"></i>
-                        <span>School Year</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url_for('logout') }}" class="logout-link">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <span>Logout</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
+        <p>Create student and teacher accounts. New accounts are saved to MySQL.</p>
 
-    <main id="dashboard-container">
+        <div class="forms-grid">
+            <!-- ADD STUDENT -->
+            <form action="{{ url_for('add_user') }}"
+                  method="POST" class="admin-form">
+                <h3><i class="fa-solid fa-graduation-cap"></i> Add Student</h3>
 
-        <header id="overview" class="glass-card">
-            <div>
-                <p class="eyebrow">ADMINISTRATION</p>
-                <h1>Welcome, {{ session.get('firstname', 'Admin') }}!</h1>
-                <p>Here's what's happening with your school today.</p>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                <label for="student-firstname">First Name *</label>
+                <input id="student-firstname" name="firstname"
+                       type="text" maxlength="100" required>
+
+                <label for="student-middlename">Middle Name</label>
+                <input id="student-middlename" name="middlename"
+                       type="text" maxlength="100">
+
+                <label for="student-lastname">Last Name *</label>
+                <input id="student-lastname" name="lastname"
+                       type="text" maxlength="100" required>
+
+                <label for="student-email">Email *</label>
+                <input id="student-email" name="email"
+                       type="email" maxlength="255" required>
+
+                <label for="student-password">Temporary Password *</label>
+                <input id="student-password" name="password"
+                       type="password" minlength="8"
+                       autocomplete="new-password" required>
+
+                <button type="submit" class="action-button">
+                    <i class="fa-solid fa-user-plus"></i> Create Student
+                </button>
+            </form>
+
+            <!-- ADD TEACHER -->
+            <form action="{{ url_for('add_teacher') }}"
+                  method="POST" class="admin-form">
+                <h3><i class="fa-solid fa-chalkboard-user"></i> Add Teacher</h3>
+
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                <label for="teacher-firstname">First Name *</label>
+                <input id="teacher-firstname" name="firstname"
+                       type="text" maxlength="100" required>
+
+                <label for="teacher-middlename">Middle Name</label>
+                <input id="teacher-middlename" name="middlename"
+                       type="text" maxlength="100">
+
+                <label for="teacher-lastname">Last Name *</label>
+                <input id="teacher-lastname" name="lastname"
+                       type="text" maxlength="100" required>
+
+                <label for="teacher-email">Email *</label>
+                <input id="teacher-email" name="email"
+                       type="email" maxlength="255" required>
+
+                <label for="teacher-password">Temporary Password *</label>
+                <input id="teacher-password" name="password"
+                       type="password" minlength="8"
+                       autocomplete="new-password" required>
+
+                <button type="submit" class="action-button">
+                    <i class="fa-solid fa-user-plus"></i> Create Teacher
+                </button>
+            </form>
+        </div>
+
+        <!-- ACCOUNTS TABLE -->
+        <div class="section-heading table-title">
+            <i class="fa-solid fa-list"></i>
+            <h2>Registered Accounts</h2>
+        </div>
+
+        <p class="section-note">
+            Accounts cannot be deleted. Disable an account to block its login
+            while keeping its school records.
+        </p>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr class="{{ '' if user.is_active else 'row-disabled' }}">
+                        <td>{{ user.id }}</td>
+                        <td>
+                            {{ user.firstname }}
+                            {% if user.middlename %}{{ user.middlename }}{% endif %}
+                            {{ user.lastname }}
+                        </td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            <span class="role-badge {{ user.role }}">
+                                {{ user.role|title }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if user.is_active %}
+                            <span class="status-badge">Active</span>
+                            {% else %}
+                            <span class="status-badge inactive">Disabled</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.id == session.get('user_id') %}
+                            <span class="section-note">Current account</span>
+                            {% elif user.is_active %}
+                            <form action="{{ url_for('disable_user', user_id=user.id) }}"
+                                  method="POST"
+                                  class="inline-form toggle-account-form"
+                                  data-action="disable">
+                                <input type="hidden" name="csrf_token"
+                                       value="{{ csrf_token }}">
+                                <button type="submit"
+                                        class="danger-button small-button">
+                                    <i class="fa-solid fa-user-slash"></i> Disable
+                                </button>
+                            </form>
+                            {% else %}
+                            <form action="{{ url_for('enable_user', user_id=user.id) }}"
+                                  method="POST"
+                                  class="inline-form toggle-account-form"
+                                  data-action="enable">
+                                <input type="hidden" name="csrf_token"
+                                       value="{{ csrf_token }}">
+                                <button type="submit"
+                                        class="action-button small-button">
+                                    <i class="fa-solid fa-user-check"></i> Enable
+                                </button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            No accounts found.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- AUDIT LOGS -->
+    <section id="audit-logs" class="content-section glass-card">
+        <div class="section-heading">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <h2>Audit Logs</h2>
+        </div>
+
+        <p>Recent administrative activities recorded in the database (latest 200).</p>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Administrator / User</th>
+                        <th>Action</th>
+                        <th>Record</th>
+                        <th>Details</th>
+                        <th>IP Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in audit_logs %}
+                    <tr>
+                        <td>{{ log.id }}</td>
+                        <td class="audit-time">
+                            {{ log.created_at.strftime('%Y-%m-%d %H:%M')
+                               if log.created_at else '—' }}
+                        </td>
+                        <td>
+                            {% if log.firstname or log.lastname %}
+                                {{ log.firstname or '' }} {{ log.lastname or '' }}
+                            {% else %}
+                                Unknown
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="action-tag {{ log.action|lower }}">
+                                {{ log.action|replace('_', ' ')|title }}
+                            </span>
+                        </td>
+                        <td>
+                            {{ log.entity_type or '—' }}
+                            {% if log.entity_id %}#{{ log.entity_id }}{% endif %}
+                        </td>
+                        <td class="audit-details">{{ log.details or '—' }}</td>
+                        <td>{{ log.ip_address or '—' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="empty-state">No audit logs found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- BACKUP AND RESTORE -->
+    <section id="backup-restore" class="content-section glass-card">
+        <div class="section-heading">
+            <i class="fa-solid fa-database"></i>
+            <h2>Backup &amp; Restore</h2>
+        </div>
+
+        <p>Download a SQL backup or restore the database from a trusted SQL file.</p>
+
+        <div class="forms-grid">
+            <div class="admin-form">
+                <h3><i class="fa-solid fa-download"></i> Database Backup</h3>
+                <p class="form-description">
+                    Download a SQL export of your configured SNHS LMS database.
+                </p>
+
+                <form action="{{ url_for('database_backup') }}"
+                      method="POST" id="backup-form">
+                    <input type="hidden" name="csrf_token"
+                           value="{{ csrf_token }}">
+                    <button type="submit" class="action-button">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        Download SQL Backup
+                    </button>
+                </form>
             </div>
 
-            <div class="admin-profile">
-                <i class="fa-solid fa-user-shield"></i>
-                <span>Administrator</span>
-            </div>
-        </header>
+            <form action="{{ url_for('database_restore') }}"
+                  method="POST" enctype="multipart/form-data"
+                  class="admin-form" id="restore-form">
+                <h3><i class="fa-solid fa-upload"></i> Restore Database</h3>
 
-        <section id="dashboard-stats" class="stats-grid">
-            <article class="stat-card glass-card">
-                <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
-                <p>Total Accounts</p>
-                <h2>{{ stats.total_users }}</h2>
-            </article>
+                <input type="hidden" name="csrf_token"
+                       value="{{ csrf_token }}">
 
-            <article class="stat-card glass-card">
-                <div class="stat-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
-                <p>Teachers</p>
-                <h2>{{ stats.teachers }}</h2>
-            </article>
+                <label for="backup-file">SQL Backup File *</label>
+                <input id="backup-file" name="backup_file"
+                       type="file" accept=".sql" required>
 
-            <article class="stat-card glass-card">
-                <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                <p>Students</p>
-                <h2>{{ stats.students }}</h2>
-            </article>
+                <label for="confirm-restore">Type YES to confirm restore *</label>
+                <input id="confirm-restore" name="confirm_restore"
+                       type="text" placeholder="Type YES"
+                       autocomplete="off" required>
 
-            <article class="stat-card glass-card">
-                <div class="stat-icon"><i class="fa-solid fa-user-shield"></i></div>
-                <p>Administrators</p>
-                <h2>{{ stats.admins }}</h2>
-            </article>
-        </section>
+                <p class="warning-note">
+                    Warning: restoring a database can overwrite existing data.
+                    Use only a trusted backup.
+                </p>
 
-        <section id="school-settings" class="content-section glass-card">
-            <div class="section-heading">
-                <i class="fa-solid fa-school"></i>
-                <h2>School Settings</h2>
-            </div>
-            <p>Manage school information and system preferences.</p>
-            <p class="section-note">School settings form can be added here.</p>
-        </section>
+                <button type="submit" class="danger-button">
+                    <i class="fa-solid fa-rotate-left"></i> Restore Database
+                </button>
+            </form>
+        </div>
 
-        <section id="accounts" class="content-section glass-card">
-            <div class="section-heading">
-                <i class="fa-solid fa-users"></i>
-                <h2>Accounts</h2>
-            </div>
+        <div class="section-heading table-title">
+            <i class="fa-solid fa-list"></i>
+            <h2>Backup &amp; Restore History</h2>
+        </div>
 
-            <p>Registered accounts retrieved from your database.</p>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Performed By</th>
+                        <th>Details</th>
+                        <th>IP Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in backup_history %}
+                    <tr>
+                        <td class="audit-time">
+                            {{ item.created_at.strftime('%Y-%m-%d %H:%M')
+                               if item.created_at else '—' }}
+                        </td>
+                        <td>
+                            <span class="action-tag {{ item.action|lower }}">
+                                {% if item.action == 'DATABASE_BACKUP' %}Backup
+                                {% else %}Restore{% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            {% if item.firstname or item.lastname %}
+                                {{ item.firstname or '' }} {{ item.lastname or '' }}
+                            {% else %}
+                                Unknown
+                            {% endif %}
+                        </td>
+                        <td class="audit-details">{{ item.details or '—' }}</td>
+                        <td>{{ item.ip_address or '—' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            No backups or restores have been recorded yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for user in users %}
-                        <tr>
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.firstname }} {{ user.middlename or '' }} {{ user.lastname }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>
-                                <span class="role-badge {{ user.role }}">
-                                    {{ user.role|title }}
-                                </span>
-                            </td>
-                        </tr>
-                        {% else %}
-                        <tr>
-                            <td colspan="4" class="empty-state">No accounts found.</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </section>
+    <!-- SCHOOL YEAR -->
+    <section id="school-year" class="content-section glass-card">
+        <div class="section-heading">
+            <i class="fa-solid fa-calendar-days"></i>
+            <h2>School Year Management</h2>
+        </div>
 
-        <section id="audit-logs" class="content-section glass-card">
-            <div class="section-heading">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-                <h2>Audit Logs</h2>
-            </div>
-            <p>Review administrative and account activities.</p>
-            <p class="section-note">An audit_logs database table is needed to save and display activity history.</p>
-        </section>
+        {% if active_school_year %}
+        <p class="active-year">
+            <i class="fa-solid fa-circle-check"></i>
+            Active school year: <strong>{{ active_school_year.year_label }}</strong>
+        </p>
+        {% else %}
+        <p class="section-note">No active school year has been configured.</p>
+        {% endif %}
 
-        <section id="backup-restore" class="content-section glass-card">
-            <div class="section-heading">
-                <i class="fa-solid fa-database"></i>
-                <h2>Backup &amp; Restore</h2>
-            </div>
-            <p>Database backup and restoration tools.</p>
-            <p class="section-note">Backup and restore actions are not enabled by this interface alone.</p>
-        </section>
+        <form action="{{ url_for('create_school_year') }}"
+              method="POST" class="admin-form school-year-form">
+            <h3>Create School Year</h3>
 
-        <section id="school-year" class="content-section glass-card">
-            <div class="section-heading">
-                <i class="fa-solid fa-calendar-days"></i>
-                <h2>School Year</h2>
-            </div>
-            <p>Manage the active school year.</p>
-            <p class="section-note">A school_years table and save/update actions are needed to persist changes.</p>
-        </section>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
-        <footer>
-            <p>&copy; {{ current_year }} Serenity National High School LMS</p>
-        </footer>
+            <label for="year-label">School Year Label *</label>
+            <input id="year-label" name="year_label"
+                   placeholder="2026-2027" maxlength="20" required>
 
-    </main>
+            <label for="start-date">Start Date *</label>
+            <input id="start-date" type="date" name="start_date" required>
+
+            <label for="end-date">End Date *</label>
+            <input id="end-date" type="date" name="end_date" required>
+
+            <button type="submit" class="action-button">
+                <i class="fa-solid fa-plus"></i> Add School Year
+            </button>
+        </form>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>School Year</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for year in school_years %}
+                    <tr>
+                        <td>{{ year.year_label }}</td>
+                        <td>{{ year.start_date.strftime('%b %d, %Y') }}</td>
+                        <td>{{ year.end_date.strftime('%b %d, %Y') }}</td>
+                        <td>
+                            {% if year.is_active %}
+                            <span class="status-badge">Active</span>
+                            {% else %}
+                            <span class="status-badge inactive">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if not year.is_active %}
+                            <form action="{{ url_for('activate_school_year', year_id=year.id) }}"
+                                  method="POST" class="inline-form activate-year-form">
+                                <input type="hidden" name="csrf_token"
+                                       value="{{ csrf_token }}">
+                                <button type="submit"
+                                        class="action-button small-button">
+                                    Activate
+                                </button>
+                            </form>
+                            {% else %}
+                            <span class="section-note">Current year</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            No school years configured.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; {{ current_year }} Serenity National High School LMS</p>
+    </footer>
+</main>
+
+<script src="/static/js/admindashboard.js"></script>
 </body>
 </html>

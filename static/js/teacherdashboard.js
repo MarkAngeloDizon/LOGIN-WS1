@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggle = document.getElementById("menu-toggle");
     const backdrop = document.getElementById("backdrop");
     const navLinks = document.querySelectorAll(".nav .nav-link");
+    const MAX_UPLOAD_BYTES = 20 * 1024 * 1024;
 
     /* ---------- Mobile sidebar ---------- */
     function setMenu(open) {
@@ -75,6 +76,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    /* ---------- File size check (matches the 20 MB server limit) ---------- */
+    document.querySelectorAll('input[type="file"]').forEach((input) => {
+        input.addEventListener("change", () => {
+            const file = input.files && input.files[0];
+
+            if (file && file.size > MAX_UPLOAD_BYTES) {
+                window.alert("That file is larger than 20 MB. Choose a smaller file.");
+                input.value = "";
+            }
+        });
+    });
+
     /* ---------- Delete confirmation ---------- */
     document.querySelectorAll("form[data-confirm]").forEach((form) => {
         form.addEventListener("submit", (e) => {
@@ -94,5 +107,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(() => { btn.disabled = true; }, 0);
             });
         });
+    });
+
+    /* Re-enable buttons when the page is restored via the back button. */
+    window.addEventListener("pageshow", (e) => {
+        if (e.persisted) {
+            document
+                .querySelectorAll('button[type="submit"]')
+                .forEach((btn) => { btn.disabled = false; });
+        }
     });
 });

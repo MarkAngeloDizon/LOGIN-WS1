@@ -705,3 +705,107 @@ textarea:focus {
         transition: none !important;
     }
 }
+
+/* ===== Lessons and materials ===== */
+.item > form + form,
+.item > form + .upload-form,
+.item > .upload-form + .delete-form {
+    margin-top: 14px;
+}
+
+.materials-title {
+    margin: 18px 0 10px;
+    color: var(--gold);
+    font-size: 14px;
+}
+
+.material-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+    list-style: none;
+}
+
+.material-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background-color: rgba(27, 15, 8, 0.35);
+    border: 1px solid var(--inner-border);
+    border-radius: 5px;
+}
+
+.material-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+.material-name:hover {
+    text-decoration: underline;
+}
+
+.btn-sm {
+    padding: 7px 10px;
+}
+
+.upload-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.upload-form input[type="file"] {
+    flex: 1 1 220px;
+    width: auto;
+}
+
+input[type="file"] {
+    padding: 8px 10px;
+    font-size: 13px;
+}
+
+input[type="file"]::file-selector-button {
+    margin-right: 10px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--orange);
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@media (min-width: 1025px) {
+    #classes,
+    #course-content {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 600px) {
+    .material-row {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .material-row .muted {
+        display: none;
+    }
+
+    .upload-form .btn {
+        width: 100%;
+    }
+}

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,136 +8,311 @@
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/student-dashboard.css">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/student-dashboard.css') }}">
 </head>
 <body>
 
-    <header class="topbar">
-        <button type="button" id="menu-toggle" class="icon-btn"
-                aria-label="Toggle menu" aria-controls="sidebar"
-                aria-expanded="false">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <strong>SNHS LMS</strong>
-    </header>
+<header class="topbar">
+    <button type="button" id="menu-toggle" class="icon-btn"
+            aria-label="Toggle menu" aria-controls="sidebar"
+            aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <strong>SNHS LMS</strong>
+</header>
 
-    <div id="backdrop" class="backdrop"></div>
+<div id="backdrop" class="backdrop"></div>
 
-    <aside id="sidebar" class="sidebar">
-        <div class="brand">
-            <img src="/static/img/Untitled design.svg"
-                 alt="SNHS Logo">
-            <strong>Serenity National High School</strong>
-            <span>Student Portal</span>
+<aside id="sidebar" class="sidebar">
+    <div class="brand">
+        <img src="{{ url_for('static', filename='img/Untitled design.svg') }}"
+             alt="SNHS Logo">
+        <strong>Serenity National High School</strong>
+        <span>Student Portal</span>
+    </div>
+
+    <div class="profile">
+        <div class="avatar">
+            {{ (session.get('firstname', 'S')[:1]
+                + session.get('lastname', '')[:1])|upper }}
         </div>
+        <div class="profile-info">
+            <strong>
+                {{ session.get('firstname', 'Student') }}
+                {{ session.get('lastname', '') }}
+            </strong>
+            <span>Student</span>
+        </div>
+    </div>
 
-        <div class="profile">
-            <div class="avatar">
-                {{ current_user.initials if current_user else 'S' }}
+    <nav class="nav" aria-label="Student navigation">
+        <a class="nav-link active" href="#overview">
+            <i class="fa-solid fa-house"></i><span>Overview</span>
+        </a>
+        <a class="nav-link" href="#subjects">
+            <i class="fa-solid fa-book-open"></i><span>My Subjects</span>
+        </a>
+        <a class="nav-link" href="#assignments">
+            <i class="fa-solid fa-clipboard-list"></i><span>Assignments</span>
+        </a>
+        <a class="nav-link" href="#schedule">
+            <i class="fa-solid fa-calendar-days"></i><span>Schedule</span>
+        </a>
+    </nav>
+
+    <a class="nav-link logout" href="{{ url_for('logout') }}">
+        <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+    </a>
+</aside>
+
+<main class="main">
+
+    <!-- OVERVIEW -->
+    <section id="overview" class="section hero">
+        <p class="eyebrow">STUDENT PORTAL</p>
+        <h1>Welcome, {{ session.get('firstname', 'Student') }}!</h1>
+        <p>Here's what's happening with your studies today.</p>
+        <p class="today-date">
+            <i class="fa-regular fa-calendar"></i>
+            {{ today.strftime('%A, %B %d, %Y') }}
+        </p>
+    </section>
+
+    <!-- SUMMARY CARDS -->
+    <div class="stats">
+        <section class="stat">
+            <div class="stat-icon">
+                <i class="fa-solid fa-clock"></i>
             </div>
             <div>
-                <strong>{{ current_user.full_name if current_user else 'Student' }}</strong>
-                <span>{{ current_user.role_label if current_user else 'Student' }}</span>
+                <h3>Today's Classes</h3>
+                <p class="stat-number">{{ today_schedule|length }}</p>
+                <span>
+                    {{ 'Class scheduled today' if today_schedule|length == 1
+                       else 'Classes scheduled today' }}
+                </span>
+            </div>
+        </section>
+
+        <section class="stat">
+            <div class="stat-icon">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <div>
+                <h3>My Subjects</h3>
+                <p class="stat-number">{{ subjects|length }}</p>
+                <span>Enrolled classes</span>
+            </div>
+        </section>
+
+        <section class="stat">
+            <div class="stat-icon">
+                <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+            <div>
+                <h3>Upcoming Deadlines</h3>
+                <p class="stat-number">{{ upcoming_deadlines|length }}</p>
+                <span>Due within 7 days</span>
+            </div>
+        </section>
+    </div>
+
+    <!-- TODAY'S CLASSES -->
+    <section class="section card">
+        <div class="card-head">
+            <div>
+                <h2><i class="fa-solid fa-calendar-check"></i> Today's Classes</h2>
+                <p>Your scheduled classes for {{ today_name }}.</p>
             </div>
         </div>
 
-        <nav class="nav">
-            <a class="nav-link active" href="#overview">
-                <i class="fa-solid fa-house"></i><span>Overview</span>
-            </a>
-            <a class="nav-link" href="#subjects">
-                <i class="fa-solid fa-book-open"></i><span>My Subjects</span>
-            </a>
-            <a class="nav-link" href="#assignments">
-                <i class="fa-solid fa-clipboard-list"></i><span>Assignments</span>
-            </a>
-            <a class="nav-link" href="#schedule">
-                <i class="fa-solid fa-calendar-days"></i><span>Schedule</span>
-            </a>
-        </nav>
-
-        <a class="nav-link logout" href="{{ url_for('logout') }}">
-            <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
-        </a>
-    </aside>
-
-    <main class="main">
-
-        <!-- OVERVIEW -->
-        <section id="overview" class="section hero">
-            <h1>Welcome, {{ current_user.firstname if current_user else 'Student' }}!</h1>
-            <p>Here's what's happening with your studies today.</p>
-        </section>
-
-        <div class="stats">
-            <section class="stat">
-                <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
-                <div>
-                    <h3>Today's Schedule</h3>
-                    <p>No classes scheduled for today.</p>
-                </div>
-            </section>
-
-            <section class="stat">
-                <div class="stat-icon"><i class="fa-solid fa-list-check"></i></div>
-                <div>
-                    <h3>Pending Tasks</h3>
-                    <p>You have no pending tasks.</p>
-                </div>
-            </section>
-
-            <section class="stat">
-                <div class="stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
-                <div>
-                    <h3>Upcoming Deadlines</h3>
-                    <p>No upcoming deadlines.</p>
-                </div>
-            </section>
+        {% if today_schedule %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Subject</th>
+                        <th>Class</th>
+                        <th>Room</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in today_schedule %}
+                    <tr>
+                        <td>
+                            {{ item.start_time.strftime('%I:%M %p') }}
+                            –
+                            {{ item.end_time.strftime('%I:%M %p') }}
+                        </td>
+                        <td>{{ item.subject_name }}</td>
+                        <td>
+                            {{ item.class_name }}
+                            <small>
+                                Grade {{ item.grade_level }} ·
+                                {{ item.section_name }}
+                            </small>
+                        </td>
+                        <td>{{ item.room or 'Not assigned' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
+        {% else %}
+        <div class="empty">
+            <i class="fa-regular fa-calendar"></i>
+            <p>No classes scheduled for today.</p>
+        </div>
+        {% endif %}
+    </section>
 
-        <!-- MY SUBJECTS -->
-        <section id="subjects" class="section card">
-            <div class="card-head">
+    <!-- MY SUBJECTS -->
+    <section id="subjects" class="section card">
+        <div class="card-head">
+            <div>
                 <h2><i class="fa-solid fa-book-open"></i> My Subjects</h2>
-                <p>Subjects you are enrolled in.</p>
+                <p>Classes you are enrolled in.</p>
             </div>
-            <div class="empty">
-                <i class="fa-solid fa-book"></i>
-                <p>You are not enrolled in any subjects yet.</p>
-            </div>
-        </section>
+            <span class="count">{{ subjects|length }} total</span>
+        </div>
 
-        <!-- ASSIGNMENTS -->
-        <section id="assignments" class="section card">
-            <div class="card-head">
+        {% if subjects %}
+        <div class="subject-grid">
+            {% for item in subjects %}
+            <article class="subject-card">
+                <div class="subject-icon">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+                <span class="subject-code">{{ item.subject_code }}</span>
+                <h3>{{ item.subject_name }}</h3>
+                <p>{{ item.class_name }}</p>
+                <p>Grade {{ item.grade_level }} · {{ item.section_name }}</p>
+                <p>
+                    <i class="fa-solid fa-user-tie"></i>
+                    {{ item.teacher_firstname }} {{ item.teacher_lastname }}
+                </p>
+                <p>
+                    <i class="fa-solid fa-location-dot"></i>
+                    {{ item.room or 'Room not assigned' }}
+                </p>
+                <small>School Year: {{ item.school_year }}</small>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty">
+            <i class="fa-solid fa-book-open"></i>
+            <p>You are not enrolled in any subjects yet.</p>
+            <span>Ask your school administrator to enroll you in a class.</span>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- ASSIGNMENTS -->
+    <section id="assignments" class="section card">
+        <div class="card-head">
+            <div>
                 <h2><i class="fa-solid fa-clipboard-list"></i> My Assignments</h2>
-                <p>Work assigned by your teachers.</p>
+                <p>Assignments from your enrolled classes.</p>
             </div>
-            <div class="empty">
-                <i class="fa-solid fa-clipboard-check"></i>
-                <p>No assignments yet. You're all caught up!</p>
-            </div>
-        </section>
+            <span class="count">{{ assignments|length }} total</span>
+        </div>
 
-        <!-- SCHEDULE -->
-        <section id="schedule" class="section card">
-            <div class="card-head">
-                <h2><i class="fa-solid fa-calendar-days"></i> My Schedule - Weekly</h2>
-                <p>Your classes for the week.</p>
-            </div>
+        {% if assignments %}
+        <div class="assignment-list">
+            {% for item in assignments %}
+            <article class="assignment">
+                <div class="assignment-icon">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
 
-            <div class="week">
-                <div class="day"><h4>Mon</h4><p>No classes</p></div>
-                <div class="day"><h4>Tue</h4><p>No classes</p></div>
-                <div class="day"><h4>Wed</h4><p>No classes</p></div>
-                <div class="day"><h4>Thu</h4><p>No classes</p></div>
-                <div class="day"><h4>Fri</h4><p>No classes</p></div>
-            </div>
-        </section>
+                <div class="assignment-content">
+                    <h3>{{ item.title }}</h3>
+                    <p class="muted">
+                        {{ item.subject_name }} · {{ item.class_name }}
+                    </p>
 
-        <footer class="footer">
-            &copy; 2026 Serenity National High School LMS
-        </footer>
-    </main>
+                    {% if item.instructions %}
+                    <p class="instructions">{{ item.instructions }}</p>
+                    {% endif %}
+
+                    <div class="assignment-meta">
+                        <span>
+                            <i class="fa-solid fa-star"></i>
+                            {{ item.points }} points
+                        </span>
+
+                        <span>
+                            <i class="fa-regular fa-clock"></i>
+                            {% if item.due_date %}
+                                Due {{ item.due_date.strftime('%b %d, %Y %I:%M %p') }}
+                            {% else %}
+                                No deadline specified
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    {% if item.due_date and item.due_date < current_time %}
+                    <span class="status overdue">Past deadline</span>
+                    {% elif item.due_date %}
+                    <span class="status upcoming">Upcoming</span>
+                    {% else %}
+                    <span class="status">No deadline</span>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty">
+            <i class="fa-solid fa-clipboard-check"></i>
+            <p>No assignments have been posted for your classes yet.</p>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- WEEKLY SCHEDULE -->
+    <section id="schedule" class="section card">
+        <div class="card-head">
+            <div>
+                <h2><i class="fa-solid fa-calendar-days"></i> My Weekly Schedule</h2>
+                <p>Your timetable from Monday to Sunday.</p>
+            </div>
+        </div>
+
+        <div class="week">
+            {% for day in weekdays %}
+            <article class="day {% if day == today_name %}today{% endif %}">
+                <h3>{{ day }}</h3>
+
+                {% if weekly_schedule[day] %}
+                    {% for item in weekly_schedule[day] %}
+                    <div class="schedule-item">
+                        <strong>{{ item.subject_name }}</strong>
+                        <span>{{ item.class_name }}</span>
+                        <span>
+                            {{ item.start_time.strftime('%I:%M %p') }}
+                            –
+                            {{ item.end_time.strftime('%I:%M %p') }}
+                        </span>
+                        <small>{{ item.room or 'Room not assigned' }}</small>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-classes">No classes</p>
+                {% endif %}
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <footer class="footer">
+        &copy; {{ today.year }} Serenity National High School LMS
+    </footer>
+
+</main>
+<script src="studentdashboard.js"></script>
 </body>
 </html>

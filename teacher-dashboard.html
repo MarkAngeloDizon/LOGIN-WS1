@@ -89,11 +89,11 @@
                     <span class="stat-label">Assignments</span>
                 </div>
             </a>
-            <a class="stat" href="#attendance">
-                <div class="stat-icon green"><i class="fa-solid fa-calendar-check"></i></div>
+            <a class="stat" href="#course-content">
+                <div class="stat-icon green"><i class="fa-solid fa-book-open"></i></div>
                 <div>
-                    <span class="stat-number">Attendance</span>
-                    <span class="stat-label">Record and update</span>
+                    <span class="stat-number">{{ lessons|length }}</span>
+                    <span class="stat-label">Lessons</span>
                 </div>
             </a>
         </div>
@@ -131,9 +131,169 @@
                 <h2><i class="fa-solid fa-folder-open"></i> Course Content</h2>
                 <p>Manage lessons and learning materials.</p>
             </div>
-            <div class="empty">
-                <i class="fa-solid fa-file-lines"></i>
-                <p>Course materials management can be added next.</p>
+
+            <form action="{{ url_for('create_lesson') }}"
+                  method="POST" enctype="multipart/form-data"
+                  class="form panel">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <h3>Create a new lesson</h3>
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="lesson-class">Class</label>
+                        <select id="lesson-class" name="class_id" required>
+                            <option value="">Select a class</option>
+                            {% for c in classes %}
+                            <option value="{{ c.id }}">{{ c.class_name }} — {{ c.subject }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="lesson-date">Lesson date</label>
+                        <input id="lesson-date" name="lesson_date" type="date">
+                    </div>
+
+                    <div class="field full">
+                        <label for="lesson-title">Title</label>
+                        <input id="lesson-title" name="title"
+                               type="text" maxlength="200" required>
+                    </div>
+
+                    <div class="field full">
+                        <label for="lesson-description">Short description</label>
+                        <textarea id="lesson-description" name="description"
+                                  rows="2"></textarea>
+                    </div>
+
+                    <div class="field full">
+                        <label for="lesson-content">Lesson content</label>
+                        <textarea id="lesson-content" name="lesson_content"
+                                  rows="5"></textarea>
+                    </div>
+
+                    <div class="field full">
+                        <label for="lesson-file">Attach a file (optional, max 20 MB)</label>
+                        <input id="lesson-file" name="material" type="file"
+                               accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.png,.jpg,.jpeg,.zip">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> Create lesson
+                    </button>
+                </div>
+            </form>
+
+            <h3 class="subhead">Existing lessons</h3>
+
+            <div class="stack">
+                {% for l in lessons %}
+                {% set mats = materials_by_lesson.get(l.id, []) %}
+                <article class="item">
+                    <form action="{{ url_for('edit_lesson', lesson_id=l.id) }}"
+                          method="POST" class="form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                        <div class="item-title">
+                            <h4>{{ l.class_name }}</h4>
+                            <span class="tag">{{ l.subject }}</span>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="lesson-title-{{ l.id }}">Title</label>
+                                <input id="lesson-title-{{ l.id }}" name="title"
+                                       type="text" maxlength="200"
+                                       value="{{ l.title }}" required>
+                            </div>
+
+                            <div class="field">
+                                <label for="lesson-date-{{ l.id }}">Lesson date</label>
+                                <input id="lesson-date-{{ l.id }}" name="lesson_date"
+                                       type="date"
+                                       value="{{ l.lesson_date.strftime('%Y-%m-%d') if l.lesson_date else '' }}">
+                            </div>
+
+                            <div class="field full">
+                                <label for="lesson-desc-{{ l.id }}">Short description</label>
+                                <textarea id="lesson-desc-{{ l.id }}" name="description"
+                                          rows="2">{{ l.description or '' }}</textarea>
+                            </div>
+
+                            <div class="field full">
+                                <label for="lesson-body-{{ l.id }}">Lesson content</label>
+                                <textarea id="lesson-body-{{ l.id }}" name="lesson_content"
+                                          rows="4">{{ l.lesson_content or '' }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-floppy-disk"></i> Save changes
+                            </button>
+                        </div>
+                    </form>
+
+                    <h5 class="materials-title">
+                        <i class="fa-solid fa-paperclip"></i> Materials ({{ mats|length }})
+                    </h5>
+
+                    {% if mats %}
+                    <ul class="material-list">
+                        {% for m in mats %}
+                        <li class="material-row">
+                            <a class="material-name"
+                               href="{{ url_for('download_material', material_id=m.id) }}">
+                                <i class="fa-solid fa-file-arrow-down"></i>
+                                {{ m.file_name }}
+                            </a>
+                            <span class="muted">
+                                {{ m.uploaded_at.strftime('%b %d, %Y') if m.uploaded_at else '' }}
+                            </span>
+                            <form action="{{ url_for('delete_material', material_id=m.id) }}"
+                                  method="POST" data-confirm="Delete this file?">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                        aria-label="Delete {{ m.file_name }}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="muted">No files attached yet.</p>
+                    {% endif %}
+
+                    <form action="{{ url_for('upload_material', lesson_id=l.id) }}"
+                          method="POST" enctype="multipart/form-data"
+                          class="upload-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <input name="material" type="file" required
+                               aria-label="File to attach to {{ l.title }}"
+                               accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.png,.jpg,.jpeg,.zip">
+                        <button type="submit" class="btn btn-ghost">
+                            <i class="fa-solid fa-upload"></i> Upload
+                        </button>
+                    </form>
+
+                    <form action="{{ url_for('delete_lesson', lesson_id=l.id) }}"
+                          method="POST" class="delete-form"
+                          data-confirm="Delete this lesson and all of its files?">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa-solid fa-trash"></i> Delete lesson
+                        </button>
+                    </form>
+                </article>
+                {% else %}
+                <div class="empty">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <p>No lessons have been created yet.</p>
+                </div>
+                {% endfor %}
             </div>
         </section>
 
@@ -146,6 +306,7 @@
 
             <form action="{{ url_for('create_assignment') }}"
                   method="POST" class="form panel">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 <h3>Create a new assignment</h3>
 
                 <div class="form-grid">
@@ -174,7 +335,7 @@
                     <div class="field">
                         <label for="assignment-points">Total points</label>
                         <input id="assignment-points" name="points"
-                               type="number" min="1" value="100" required>
+                               type="number" min="1" max="10000" value="100" required>
                     </div>
 
                     <div class="field full">
@@ -198,6 +359,8 @@
                 <article class="item">
                     <form action="{{ url_for('edit_assignment', assignment_id=a.id) }}"
                           method="POST" class="form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
                         <div class="item-title">
                             <h4>{{ a.class_name }}</h4>
                             <span class="tag">{{ a.subject }}</span>
@@ -221,7 +384,7 @@
                             <div class="field">
                                 <label for="points-{{ a.id }}">Total points</label>
                                 <input id="points-{{ a.id }}" name="points"
-                                       type="number" min="1"
+                                       type="number" min="1" max="10000"
                                        value="{{ a.points }}" required>
                             </div>
 
@@ -243,6 +406,7 @@
                     <form action="{{ url_for('delete_assignment', assignment_id=a.id) }}"
                           method="POST" class="delete-form"
                           data-confirm="Delete this assignment?">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                         <button type="submit" class="btn btn-danger">
                             <i class="fa-solid fa-trash"></i> Delete assignment
                         </button>
@@ -297,6 +461,7 @@
             {% if selected_class and students %}
             <form action="{{ url_for('save_attendance') }}"
                   method="POST" class="form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 <input type="hidden" name="class_id" value="{{ selected_class }}">
                 <input type="hidden" name="attendance_date" value="{{ attendance_date }}">
 
@@ -310,7 +475,9 @@
                         </span>
 
                         <select name="status_{{ student.id }}"
-                                class="status-select" required>
+                                class="status-select"
+                                aria-label="Status for {{ student.firstname }} {{ student.lastname }}"
+                                required>
                             {% for status in ['Present', 'Absent', 'Late', 'Excused'] %}
                             <option value="{{ status }}"
                                 {% if attendance_map.get(student.id, 'Present') == status %}selected{% endif %}>

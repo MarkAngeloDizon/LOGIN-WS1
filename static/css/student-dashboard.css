@@ -371,6 +371,314 @@ a {
     outline-offset: 3px;
 }
 
+
+/* Dynamic student dashboard content */
+.today-date {
+    margin-top: 16px;
+    color: #f2c75c;
+}
+
+.stat-number {
+    margin: 8px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #f2c75c;
+}
+
+.stat span,
+.muted,
+.assignment-meta,
+.subject-card small {
+    color: #c9bdb5;
+    font-size: 13px;
+}
+
+.card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.count {
+    white-space: nowrap;
+    padding: 7px 12px;
+    border: 1px solid rgba(242, 199, 92, 0.3);
+    border-radius: 20px;
+    color: #f2c75c;
+}
+
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 580px;
+}
+
+th, td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+th {
+    color: #f2c75c;
+    font-size: 13px;
+}
+
+td {
+    color: #f5eee8;
+    font-size: 14px;
+}
+
+td small {
+    display: block;
+    margin-top: 5px;
+    color: #c9bdb5;
+}
+
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.subject-card,
+.assignment,
+.day {
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.subject-icon,
+.assignment-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    color: #1b0f08;
+    background: #f2c75c;
+}
+
+.subject-code {
+    color: #f2c75c;
+    font-size: 12px;
+}
+
+.subject-card h3,
+.assignment h3 {
+    margin: 8px 0;
+    overflow-wrap: anywhere;
+}
+
+.subject-card p,
+.assignment p {
+    margin: 8px 0;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.subject-card p i {
+    width: 18px;
+    color: #f2c75c;
+}
+
+.assignment-list {
+    display: grid;
+    gap: 14px;
+}
+
+.assignment {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.assignment-icon {
+    flex-shrink: 0;
+}
+
+.assignment-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.instructions {
+    white-space: pre-line;
+}
+
+.assignment-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin: 12px 0;
+}
+
+.assignment-meta i {
+    color: #f2c75c;
+}
+
+.status {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 12px;
+}
+
+.status.upcoming {
+    color: #f2c75c;
+    background: rgba(242, 199, 92, 0.12);
+}
+
+.status.overdue {
+    color: #ffaaa0;
+    background: rgba(255, 90, 75, 0.12);
+}
+
+.week {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+}
+
+.day h3 {
+    margin-bottom: 14px;
+    color: #f2c75c;
+}
+
+.day.today {
+    border-color: #f2c75c;
+}
+
+.schedule-item {
+    display: grid;
+    gap: 7px;
+    margin-bottom: 12px;
+    padding: 12px;
+    border-left: 3px solid #e48a24;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.schedule-item strong {
+    color: #f2c75c;
+}
+
+.schedule-item span,
+.schedule-item small,
+.no-classes {
+    color: #c9bdb5;
+    line-height: 1.5;
+}
+
+.empty {
+    padding: 36px 16px;
+    text-align: center;
+    color: #c9bdb5;
+}
+
+.empty > i {
+    margin-bottom: 14px;
+    color: #f2c75c;
+    font-size: 30px;
+}
+
+.empty p {
+    margin-bottom: 8px;
+}
+
+.profile-info {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.backdrop {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        position: fixed;
+        z-index: 1001;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        overflow-y: auto;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .backdrop.visible {
+        display: block;
+        position: fixed;
+        z-index: 1000;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+    }
+
+    .main {
+        margin-left: 0;
+        padding-top: 85px;
+    }
+
+    .topbar {
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        right: 0;
+        left: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .card-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .assignment {
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .assignment-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .assignment-meta {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .week {
+        grid-template-columns: 1fr;
+    }
+}
+
+
 /* ===== Desktop: 2-column grid like the admin dashboard ===== */
 @media (min-width: 1025px) {
     .main {
